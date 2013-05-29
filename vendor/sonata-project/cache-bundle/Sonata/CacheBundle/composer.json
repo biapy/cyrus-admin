@@ -1,0 +1,46 @@
+{
+    "name": "sonata-project/cache-bundle",
+    "description": "This bundle provides caching services",
+    "keywords": ["cache block"],
+    "homepage": "https://github.com/sonata-project/SonataCacheBundle",
+    "type": "symfony-bundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Thomas Rabaix",
+            "email": "thomas.rabaix@sonata-project.org",
+            "homepage": "http://sonata-project.org"
+        },
+        {
+            "name": "Sonata Community",
+            "homepage": "https://github.com/sonata-project/SonataCacheBundle/contributors"
+        }
+    ],
+    "require": {
+        "symfony/http-foundation": ">=2.1,<2.3-dev",
+        "symfony/routing": ">=2.1,<2.3-dev",
+        "symfony/security": ">=2.1,<2.3-dev",
+        "symfony/process": ">=2.1,<2.3-dev"
+    },
+    "require-dev": {
+        "doctrine/orm": ">=2.2.0"
+    },
+    "suggest": {
+        "doctrine/doctrine-bundle": "ORM support",
+        "doctrine/orm": "ORM support",
+        "doctrine/phpcr-bundle": "PHPCR ODM support",
+        "doctrine/phpcr-odm": "PHPCR ODM support",
+        "ext-apc": "Caching with ext/apc",
+        "ext-memcached": "Caching with ext/memcached"
+    },
+    "autoload": {
+        "psr-0": { "Sonata\\CacheBundle": "" }
+    },
+    "target-dir": "Sonata/CacheBundle",
+    "extra": {
+        "branch-alias": {
+            "dev-2.0": "2.0.x-dev",
+            "dev-master": "2.1.x-dev"
+        }
+    }
+}

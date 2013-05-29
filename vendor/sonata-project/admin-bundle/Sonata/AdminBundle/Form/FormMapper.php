@@ -1,0 +1,189 @@
+<?php
+/*
+ * This file is part of the Sonata package.
+ *
+ * (c) Thomas Rabaix <thomas.rabaix@sonata-project.org>
+ *
+ * For the full copyright and license information, please view the LICENSE
+ * file that was distributed with this source code.
+ *
+ */
+namespace Sonata\AdminBundle\Form;
+
+use Sonata\AdminBundle\Builder\FormContractorInterface;
+use Sonata\AdminBundle\Admin\AdminInterface;
+use Symfony\Component\Form\FormBuilder;
+use Sonata\AdminBundle\Mapper\BaseGroupedMapper;
+
+/**
+ * This class is use to simulate the Form API
+ *
+ */
+class FormMapper extends BaseGroupedMapper
+{
+    protected $formBuilder;
+
+    /**
+     * @param \Sonata\AdminBundle\Builder\FormContractorInterface $formContractor
+     * @param \Symfony\Component\Form\FormBuilder                 $formBuilder
+     * @param \Sonata\AdminBundle\Admin\AdminInterface            $admin
+     */
+    public function __construct(FormContractorInterface $formContractor, FormBuilder $formBuilder, AdminInterface $admin)
+    {
+        parent::__construct($formContractor, $admin);
+        $this->formBuilder    = $formBuilder;
+    }
+
+    /**
+     * @param array $keys field names
+     *
+     * @return \Sonata\AdminBundle\Form\FormMapper
+     */
+    public function reorder(array $keys)
+    {
+        $this->admin->reorderFormGroup($this->getCurrentGroupName(), $keys);
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     * @param string $type
+     * @param array  $options
+     * @param array  $fieldDescriptionOptions
+     *
+     * @return \Sonata\AdminBundle\Form\FormMapper
+     */
+    public function add($name, $type = null, array $options = array(), array $fieldDescriptionOptions = array())
+    {
+        $label = $name instanceof FormBuilder ? $name->getName() : $name;
+
+        $this->addFieldToCurrentGroup($label);
+
+        if (!isset($fieldDescriptionOptions['type']) && is_string($type)) {
+            $fieldDescriptionOptions['type'] = $type;
+        }
+
+        $fieldDescription = $this->admin->getModelManager()->getNewFieldDescriptionInstance(
+            $this->admin->getClass(),
+            $name instanceof FormBuilder ? $name->getName() : $name,
+            $fieldDescriptionOptions
+        );
+
+        //Note that the builder var is actually the formContractor:
+        $this->builder->fixFieldDescription($this->admin, $fieldDescription, $fieldDescriptionOptions);
+
+        $this->admin->addFormFieldDescription($name instanceof FormBuilder ? $name->getName() : $name, $fieldDescription);
+
+        if ($name instanceof FormBuilder) {
+            $this->formBuilder->add($name);
+        } else {
+            //Note that the builder var is actually the formContractor:
+            $options = array_replace_recursive($this->builder->getDefaultOptions($type, $fieldDescription), $options);
+
+            if (!isset($options['label'])) {
+                $options['label'] = $this->admin->getLabelTranslatorStrategy()->getLabel($fieldDescription->getName(), 'form', 'label');
+            }
+
+            $help = null;
+            if (isset($options['help'])) {
+                $help = $options['help'];
+                unset($options['help']);
+            }
+
+            $this->formBuilder->add($name, $type, $options);
+
+            if (null !== $help) {
+                $this->admin->getFormFieldDescription($name)->setHelp($help);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $name
+     *
+     * @return \Symfony\Component\Form\FormInterface
+     */
+    public function get($name)
+    {
+        return $this->formBuilder->get($name);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return boolean
+     */
+    public function has($key)
+    {
+        return $this->formBuilder->has($key);
+    }
+
+    /**
+     * @param string $key
+     *
+     * @return \Sonata\AdminBundle\Form\FormMapper
+     */
+    public function remove($key)
+    {
+        $this->admin->removeFormFieldDescription($key);
+        $this->formBuilder->remove($key);
+
+        return $this;
+    }
+
+    /**
+     * @return \Symfony\Component\Form\FormBuilder
+     */
+    public function getFormBuilder()
+    {
+        return $this->formBuilder;
+    }
+
+    /**
+     * @param string $name
+     * @param mixed  $type
+     * @param array  $options
+     *
+     * @return \Symfony\Component\Form\FormBuilder
+     */
+    public function create($name, $type = null, array $options = array())
+    {
+        return $this->formBuilder->create($name, $type, $options);
+    }
+
+    /**
+     * @param array $helps
+     *
+     * @return FormMapper
+     */
+    public function setHelps(array $helps = array())
+    {
+        foreach ($helps as $name => $help) {
+            if ($this->admin->hasFormFieldDescription($name)) {
+                $this->admin->getFormFieldDescription($name)->setHelp($help);
+            }
+        }
+
+        return $this;
+    }
+    
+    /**
+     * {@inheritdoc}
+     */
+    protected function getGroups() 
+    {
+        return $this->admin->getFormGroups();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function setGroups(array $groups) 
+    {
+        $this->admin->setFormGroups($groups);
+    }
+    
+}
