@@ -39,6 +39,7 @@ class Alias
      */
     public function __construct()
     {
+        $this->enabled = true;
         $this->alias_targets = new \Doctrine\Common\Collections\ArrayCollection();
     }
 

@@ -41,6 +41,15 @@ class User
 
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->enabled = true;
+        $this->has_mailbox = true;
+    }
+
+    /**
      * Get id
      *
      * @return integer 

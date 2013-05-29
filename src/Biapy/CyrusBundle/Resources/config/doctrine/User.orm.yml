@@ -23,11 +23,9 @@ Biapy\CyrusBundle\Entity\User:
     enabled:
       type: boolean
       nullable: false
-      default: 1
     has_mailbox:
       type: boolean
       nullable: false
-      default: 1
   manyToOne:
     domain:
       targetEntity: Domain
