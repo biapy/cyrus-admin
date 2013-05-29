@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2">
+    <file source-language="en" datatype="plaintext" original="file.ext">
+        <body>
+            <trans-unit id="1">
+                <source>Symfony2 is great</source>
+                <target>J'aime Symfony2</target>
+            </trans-unit>
+            <trans-unit id="cyrus_admin">
+                <source>Cyrus Admin</source>
+                <target>Administration de Cyrus</target>
+            </trans-unit>
+            <trans-unit id="domains">
+                <source>Domains</source>
+                <target>Domaines</target>
+            </trans-unit>
+            <trans-unit id="domain_list">
+                <source>Domain List</source>
+                <target>Liste des domaines</target>
+            </trans-unit>
+            <trans-unit id="domain">
+                <source>Domain</source>
+                <target>Domaine</target>
+            </trans-unit>
+            <trans-unit id="name">
+                <source>Name</source>
+                <target>Nom</target>
+            </trans-unit>
+            <trans-unit id="users">
+                <source>Users</source>
+                <target>Utilisateurs</target>
+            </trans-unit>
+            <trans-unit id="user_list">
+                <source>User List</source>
+                <target>Liste des utilisateurs</target>
+            </trans-unit>
+            <trans-unit id="username">
+                <source>Username</source>
+                <target>Nom d'utilisateur</target>
+            </trans-unit>
+            <trans-unit id="password">
+                <source>Password</source>
+                <target>Mot de passe</target>
+            </trans-unit>
+            <trans-unit id="aliases">
+                <source>Aliases</source>
+                <target>Alias</target>
+            </trans-unit>
+            <trans-unit id="aliasname">
+                <source>Aliasname</source>
+                <target>Nom de l'alias</target>
+            </trans-unit>
+            <trans-unit id="alias_list">
+                <source>Alias List</source>
+                <target>Liste des alias</target>
+            </trans-unit>
+            <trans-unit id="targets">
+                <source>Targets</source>
+                <target>Cibles</target>
+            </trans-unit>
+            <trans-unit id="enabled">
+                <source>Enabled</source>
+                <target>Actif</target>
+            </trans-unit>
+            <trans-unit id="sender_watch_list">
+                <source>Sender Watch List</source>
+                <target>Surveillances des envois</target>
+            </trans-unit>
+            <trans-unit id="sender_watchers">
+                <source>Senders watchers</source>
+                <target>Surveillance des envois</target>
+            </trans-unit>
+            <trans-unit id="sender_address">
+                <source>Sender Address</source>
+                <target>Adresse de l'expéditeur</target>
+            </trans-unit>
+            <trans-unit id="target">
+                <source>Target</source>
+                <target>Cible</target>
+            </trans-unit>
+        </body>
+    </file>
+</xliff>

@@ -1,0 +1,28 @@
+Biapy\CyrusBundle\Entity\SenderWatch:
+  type: entity
+  table: sender_watch
+  uniqueConstraints:
+    send_watch_unique:
+      columns: [ sender_address, target ]
+  indexes:
+    sender_address_index:
+      columns: [ sender_address ]
+    enabled_index:
+      columns: [ enabled ]
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    sender_address:
+      type: string
+      length: 255
+      nullable: false
+    target:
+      type: string
+      length: 255
+      nullable: false
+    enabled:
+      type: boolean
+      nullable: false
+      default: 1

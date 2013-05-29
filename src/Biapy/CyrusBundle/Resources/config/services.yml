@@ -1,0 +1,28 @@
+parameters:
+#    biapy_cyrus.example.class: Biapy\CyrusBundle\Example
+
+services:
+    biapy.cyrus.admin.domain:
+        class: Biapy\CyrusBundle\Admin\DomainAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Cyrus, label: Domains }
+        arguments: [null, Biapy\CyrusBundle\Entity\Domain, BiapyCyrusBundle:DomainAdmin]
+    biapy.cyrus.admin.user:
+        class: Biapy\CyrusBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Cyrus, label: Users }
+        arguments: [null, Biapy\CyrusBundle\Entity\User, BiapyCyrusBundle:UserAdmin]
+    biapy.cyrus.admin.alias:
+        class: Biapy\CyrusBundle\Admin\AliasAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Cyrus, label: Aliases }
+        arguments: [null, Biapy\CyrusBundle\Entity\Alias, BiapyCyrusBundle:AliasAdmin]
+    biapy.cyrus.admin.sender_watch:
+        class: Biapy\CyrusBundle\Admin\SenderWatchAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: Cyrus, label: 'Senders watchers' }
+        arguments: [null, Biapy\CyrusBundle\Entity\SenderWatch, BiapyCyrusBundle:SenderWatchAdmin]
+ 
+#    biapy_cyrus.example:
+#        class: %biapy_cyrus.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -1,0 +1,38 @@
+Biapy\CyrusBundle\Entity\Alias:
+  type: entity
+  table: alias
+  uniqueConstraints:
+    aliasname_unique:
+      columns: [ domain_id, aliasname ]
+  indexes:
+    enabled_index:
+      columns: [ enabled ]
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    aliasname:
+      type: string
+      length: 255
+      nullable: false
+    enabled:
+      type: boolean
+      nullable: false
+      default: 1
+  manyToOne:
+    domain:
+      targetEntity: Domain
+      inversedBy: aliases
+      joinColumn:
+        name: domain_id
+        referencedColumnName: id
+        onDelete: CASCADE
+        onUpdate: CASCADE
+  oneToMany:
+    alias_targets:
+      targetEntity: AliasTarget
+      mappedBy: alias
+      cascade: [ persist ]
+      orphanRemoval: true
+

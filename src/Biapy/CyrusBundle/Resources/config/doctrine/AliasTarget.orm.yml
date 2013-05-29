@@ -1,0 +1,25 @@
+Biapy\CyrusBundle\Entity\AliasTarget:
+  type: entity
+  table: alias_target
+  uniqueConstraints:
+    alias_target_unique:
+      columns: [ alias_id, target ]
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    target:
+      type: string
+      length: 255
+      nullable: false
+  manyToOne:
+    alias:
+      targetEntity: Alias
+      inversedBy: alias_targets
+      joinColumn:
+        name: alias_id
+        referencedColumnName: id
+        onDelete: CASCADE
+        onUpdate: CASCADE
+

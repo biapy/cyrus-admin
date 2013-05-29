@@ -1,0 +1,24 @@
+Biapy\CyrusBundle\Entity\Domain:
+  type: entity
+  table: domain
+  indexes:
+    name_index:
+      columns: [ name ]
+  id:
+    id:
+      type: integer
+      generator: { strategy: AUTO }
+  fields:
+    name:
+      type: string
+      length: 255
+      unique: true
+      nullable: false
+  oneToMany:
+    users:
+      targetEntity: User
+      mappedBy: domain
+    aliases:
+      targetEntity: Alias
+      mappedBy: domain
+
