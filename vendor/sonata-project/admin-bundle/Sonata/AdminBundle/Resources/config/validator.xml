@@ -12,5 +12,5 @@
             <tag name="validator.constraint_validator" alias="sonata.admin.validator.inline" />
         </service>
     </services>
-
+    
 </container>

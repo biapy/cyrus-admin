@@ -71,6 +71,7 @@ class AuditBlockService extends BaseBlockService
     public function validateBlock(ErrorElement $errorElement, BlockInterface $block)
     {
         // TODO: Implement validateBlock() method.
+        
     }
 
     /**

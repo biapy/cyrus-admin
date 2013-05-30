@@ -62,6 +62,30 @@ class AliasAdmin extends Admin
             ->add('enabled')
         ;
     }
+    
+    public function validate(ErrorElement $errorElement, $object){
+    	if($object->getEnabled()){
+    
+    		/* 
+    		 * aliasname	- Need to fit alias pattern		- Max Length: 85 characters	- Can't be empty
+    		 * domain 		- Need to fit domain pattern	- Max Length: 85 characters - Can't be empty
+    		 * 
+    		 * Max length: 255 bytes max. In UTF8: 1 char = 3 bytes, so we have a maximum of 85 characters.
+    		 */
+
+    		$maxLengthAliasname = 85;
+    		$regexAlias = '/^(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){255,})(?!(?:(?:\x22?\x5C[\x00-\x7E]\x22?)|(?:\x22?[^\x5C\x22]\x22?)){65,}@)(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22))(?:\.(?:(?:[\x21\x23-\x27\x2A\x2B\x2D\x2F-\x39\x3D\x3F\x5E-\x7E]+)|(?:\x22(?:[\x01-\x08\x0B\x0C\x0E-\x1F\x21\x23-\x5B\x5D-\x7F]|(?:\x5C[\x00-\x7F]))*\x22)))*$/iD';
+    		    
+    		$errorElement	->with('domain')
+    							->assertNotBlank()
+    							->end()
+    						->with('aliasname')
+    							->assertNotBlank()
+    							->assertMaxLength(array('limit' => $maxLengthAliasname))
+    							->assertRegex(array('pattern' => $regexAlias))
+    						->end();
+    	}
+    }
 
 }
 
