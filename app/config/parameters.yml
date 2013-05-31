@@ -1,10 +1,10 @@
 parameters:
     database_driver:   pdo_mysql
-    database_host:     localhost
-    database_port:     8889
+    database_host:     127.0.0.1
+    database_port:     ~
     database_name:     cyrus_imap-domain-com
-    database_user:     root
-    database_password: root
+    database_user:     c_imap-domain-com
+    database_password: some-password
 
     mailer_transport:  smtp
     mailer_host:       127.0.0.1
@@ -12,4 +12,4 @@ parameters:
     mailer_password:   ~
 
     locale:            en
-    secret:            8291d9b3837055dd86e671ccd6bc2589
+    secret:            ThisTokenIsNotSoSecretChangeIt
