@@ -66,14 +66,12 @@ class SenderWatchAdmin extends Admin
     	if($object->getEnabled()){
     
     		/* 
-    		 * sender_address 	- Email	- Max Length: 85 characters	- Can't be empty
-    		 * target 			- Email - Max Length: 85 characters	- Can't be empty
-    		 * 
-    		 * Max length: 255 bytes max. In UTF8: 1 char = 3 bytes, so we have a maximum of 85 characters.
+    		 * sender_address 	- Needs to fit email pattern	- Max Length: 255 characters	- Can't be empty
+    		 * target 			- Needs to fit email pattern	- Max Length: 255 characters	- Can't be empty
     		 */
     
-    		$maxLengthSender = 85;
-    		$maxLengthTarget = 85;
+    		$maxLengthSender = 255;
+    		$maxLengthTarget = 255;
     
     		$errorElement	->with('sender_address')
     							->assertNotBlank()
