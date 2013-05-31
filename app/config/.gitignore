@@ -1,3 +1,0 @@
-#ignore local SQL database configuration which is particular to the production computer
-parameters.yml
-parameters.yml.back

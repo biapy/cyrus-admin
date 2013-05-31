@@ -2,4 +2,8 @@
 /app/logs/*
 *eclipse*
 *.config
-parameters.yml
+app/config/parameters.yml
+app/config/parameters.yml.back
+.buildpath
+.project
+.settings

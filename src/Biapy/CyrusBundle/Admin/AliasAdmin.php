@@ -58,18 +58,18 @@ class AliasAdmin extends Admin {
 								->assertRegex(array('pattern' => $regexAlias))
 							->end();
 
-			/* The target's text area need an independ check since we need to check each line thereof */
+			/* The target's text area need an independendent check since we need to check each line thereof */
 			$targetsAlias = $object->getAliasTargets();
 			
 			foreach ($targetsAlias as $key => $value) {
-				$target = $targetsAlias[$key];
+				$value = trim($value);
 				$line = $key + 1;
 				
-				if(!filter_var($target, FILTER_VALIDATE_EMAIL) || !isset($target) || trim($target)===''){
-					$errorElement->addViolation("L'adresse email $target (ligne $line) n'est pas valide", array(), "");
+				if( !$value || !filter_var($value, FILTER_VALIDATE_EMAIL) ){
+					$errorElement->with('targets')->addViolation("L'adresse email $value (ligne $line) n'est pas valide", array(), "");
 				}
-				if(strlen($target) > $maxLengthEmail){
-					$errorElement->addViolation("L'adresse email $target (ligne $line)  doit avoir au maximum $maxLengthEmail caracteres.", array(), "");
+				if( mb_strlen($value) > $maxLengthEmail ){
+					$errorElement->with('targets')->addViolation("L'adresse email $value (ligne $line)  doit avoir au maximum $maxLengthEmail caracteres.", array(), "");
 				}
 			}
 
