@@ -5,6 +5,7 @@
         "psr-0": { "": "src/" }
     },
     "require": {
+        "lunetics/locale-bundle": "2.2.*",
         "php": ">=5.3.3",
         "symfony/symfony": "2.2.*",
         "doctrine/orm": "~2.2,>=2.2.3",
