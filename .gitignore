@@ -7,3 +7,4 @@ app/config/parameters.yml.back
 .buildpath
 .project
 .settings
+web/app_dev.php
