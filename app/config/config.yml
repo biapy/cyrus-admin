@@ -66,6 +66,8 @@ swiftmailer:
 
 sonata_admin:
   title: Cyrus Admin
+  templates:
+    user_block: BiapyCyrusBundle:Admin:admin_topnav.html.twig
 
 sonata_block:
     default_contexts: [cms]
@@ -76,3 +78,13 @@ sonata_block:
         sonata.block.service.text:
         sonata.block.service.rss:
 
+lunetics_locale:
+    allowed_locales:
+      - en
+      - fr
+    guessing_order:
+      - session
+      - cookie
+      - browser
+      - query
+      - router
