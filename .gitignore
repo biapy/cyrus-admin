@@ -8,3 +8,4 @@ app/config/parameters.yml.back
 .project
 .settings
 web/app_dev.php
+.DS_Store
