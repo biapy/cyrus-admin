@@ -7,9 +7,8 @@ use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
-use Biapy\CyrusBundle\Extension\ExtendedAdmin;
  
-class DomainAdmin extends ExtendedAdmin
+class DomainAdmin extends Admin
 {
     // setup the default sort column and order
     protected $datagridValues = array(
@@ -21,7 +20,6 @@ class DomainAdmin extends ExtendedAdmin
     {
         $formMapper
             ->add('name')
-            #->add('adminUsers')
         ;
     }
  
@@ -50,7 +48,7 @@ class DomainAdmin extends ExtendedAdmin
     		
     		$errorElement	->with('name')
     							->assertNotBlank()
-    							->assertLength(array('max' => $maxLengthName))
+    							->assertMaxLength(array('limit' => $maxLengthName))
     							->assertRegex(array('pattern' => $regexDomain))
     						->end();
     	

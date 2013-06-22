@@ -26,7 +26,6 @@ class AppKernel extends Kernel
             new Sonata\DoctrineORMAdminBundle\SonataDoctrineORMAdminBundle(),
             new Knp\Bundle\MenuBundle\KnpMenuBundle(),
             new Biapy\CyrusBundle\BiapyCyrusBundle(),
-        	new Biapy\SecurityBundle\BiapySecurityBundle(),
         	new Lunetics\LocaleBundle\LuneticsLocaleBundle(),
         );
 

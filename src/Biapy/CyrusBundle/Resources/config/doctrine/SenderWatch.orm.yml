@@ -25,5 +25,3 @@ Biapy\CyrusBundle\Entity\SenderWatch:
     enabled:
       type: boolean
       nullable: false
-      options:
-          default: true
