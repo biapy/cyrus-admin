@@ -1,0 +1,19 @@
+{% extends 'BiapyCyrusBundle::layout.html.twig' %}
+
+{% block title %}Recovery by mail{% endblock %}
+
+{% block body %}
+
+<div align="center">{{ flash }}</div>
+
+<p>
+	Recovery by mail
+</p>
+
+<form action={{ path('recovery_email_page') }} method="post">
+
+	{{ form_widget(form) }}
+
+	<input type="submit" />
+</form>
+{% endblock %}

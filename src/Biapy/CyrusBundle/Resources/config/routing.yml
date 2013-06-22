@@ -1,3 +1,32 @@
 biapy_cyrus_homepage:
     pattern:  /hello/{name}
     defaults: { _controller: BiapyCyrusBundle:Default:index }
+
+unauthorized_page:
+    pattern: /unauthorized
+    defaults: { _controller: BiapyCyrusBundle:UnauthorizedAccess:unauthorized }
+
+user_interface_homepage:
+    pattern:  /user
+    defaults: { _controller: BiapyCyrusBundle:UserManagementInterface:index }
+    
+user_edit_page:
+    pattern: /user/edit
+    defaults: { _controller: BiapyCyrusBundle:UserManagementInterface:edit }
+    
+recovery_page:
+    pattern: /recovery
+    defaults: { _controller: BiapyCyrusBundle:UserManagementInterface:recovery }
+    
+recovery_email_page:
+    pattern: /recovery/email
+    defaults: { _controller: BiapyCyrusBundle:UserManagementInterface:recoveryEmail }
+
+recovery_token_page:
+    pattern: /recovery/email/{token}
+    defaults: { _controller: BiapyCyrusBundle:UserManagementInterface:recoveryToken }
+    
+
+recovery_admin_page:
+    pattern: /recovery/admin
+    defaults: { _controller: BiapyCyrusBundle:UserManagementInterface:recoveryAdmin }

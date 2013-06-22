@@ -146,4 +146,42 @@ class Domain
     }
     
     
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $adminUsers;
+
+
+    /**
+     * Add adminUsers
+     *
+     * @param \Biapy\CyrusBundle\Entity\User $adminUsers
+     * @return Domain
+     */
+    public function addAdminUser(\Biapy\CyrusBundle\Entity\User $adminUsers)
+    {
+        $this->adminUsers[] = $adminUsers;
+
+        return $this;
+    }
+
+    /**
+     * Remove adminUsers
+     *
+     * @param \Biapy\CyrusBundle\Entity\User $adminUsers
+     */
+    public function removeAdminUser(\Biapy\CyrusBundle\Entity\User $adminUsers)
+    {
+        $this->adminUsers->removeElement($adminUsers);
+    }
+
+    /**
+     * Get adminUsers
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAdminUsers()
+    {
+        return $this->adminUsers;
+    }
 }

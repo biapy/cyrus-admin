@@ -10,8 +10,9 @@ use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
 
 use Biapy\CyrusBundle\Entity\SenderWatch;
+use Biapy\CyrusBundle\Extension\ExtendedAdmin;
 
-class SenderWatchAdmin extends Admin
+class SenderWatchAdmin extends ExtendedAdmin
 {
     // setup the defaut sort column and order
     protected $datagridValues = array(

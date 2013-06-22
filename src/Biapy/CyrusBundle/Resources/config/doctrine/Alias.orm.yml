@@ -19,6 +19,8 @@ Biapy\CyrusBundle\Entity\Alias:
     enabled:
       type: boolean
       nullable: false
+      options:
+          default: true
   manyToOne:
     domain:
       targetEntity: Domain
