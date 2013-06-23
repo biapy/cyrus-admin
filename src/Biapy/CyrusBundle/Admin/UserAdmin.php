@@ -33,19 +33,27 @@ class UserAdmin extends ExtendedAdmin
     	if( $this->getSecurityContext()->isGranted('ROLE_ADMIN_DOMAIN') )
     	{
     		
-    		$formMapper
-    		->add('domain', null, array('choices' => $this->getSecurityContext()->getToken()->getUser()->getGrantedDomains()))
-    		->add('username')
-    		->add('password')
-    		->add('enabled', null, array('required' => false));
+    		if( $this->securityContext->isGranted('ROLE_SUPER_ADMIN') )
+    		{
+    			//A super admin can see all the domains even if not all are granted
+    			$formMapper	->add('domain');
+    		} else 
+    		{
+    			$formMapper
+    				->add('domain', null, array('choices' => $this->getSecurityContext()->getToken()->getUser()->getGrantedDomains()));
+    		}
+    		
+    		$formMapper	->add('username')
+    					->add('password')
+    					->add('enabled', null, array('required' => false));
     		
     		if( $this->securityContext->isGranted('ROLE_SUPER_ADMIN') )
     		{
     			
     			$formMapper	->add('grantedDomains', null, array('required' => false))
     						->add('is_super_admin', null, array('required' => false));
-    		}
-    		else {
+    		} else
+    		{
     			$formMapper->add('grantedDomains', null, array('required' => false, 'choices' => $this->getSecurityContext()->getToken()->getUser()->getGrantedDomains()));
     		}
     	}
