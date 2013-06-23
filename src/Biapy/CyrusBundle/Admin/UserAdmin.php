@@ -93,7 +93,6 @@ class UserAdmin extends ExtendedAdmin
     		
     		/* 
     		 * username	- Needs to fit username pattern	- Max Length: 255 characetrs 	- Can't be empty
-    		 * domain 	- Needs to fit domain pattern	- Max Length: 255 characters	- Can't be empty
     		 * password 								- Max Length: 255 characters	- Can't be empty
     		 */
     		
@@ -107,6 +106,10 @@ class UserAdmin extends ExtendedAdmin
     							->assertNotBlank()
     							->assertLength(array('max' => $maxLengthUsername))
     							->assertRegex(array('pattern' => $regexUsername))
+    							->end()
+    						->with('domain')
+    							->assertNotNull()
+    							->assertNotBlank()
     							->end()
     						->with('password')
     							->assertNotBlank()
