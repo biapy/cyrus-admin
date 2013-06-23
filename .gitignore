@@ -2,8 +2,11 @@
 /app/logs/*
 composer.phar
 app/config/parameters.yml
+app/bootstrap.php.cache
 web/app_dev.php
+web/bundles/*
 vendor/*
+composer.lock
 *eclipse*
 *.config
 app/config/parameters.yml.back
