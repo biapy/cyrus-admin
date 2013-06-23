@@ -34,8 +34,15 @@ class UserManagementInterfaceController extends Controller
     		$entityManager = $this->getDoctrine()->getManager();
     		$form->bind($request);
     		$user = $form->getData();
-    		$user = $entityManager->getRepository('BiapyCyrusBundle:User')->findOneBy(array('username' => $user->getUsername()));
-    		if($user != null)
+    		$exploded = explode('@', $user->getUsername());
+    		
+    		if(sizeof($exploded) != 2)
+    		{
+    			return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'This user doesn\'t exist'));
+    		}
+    		
+    		$user = $entityManager->getRepository('BiapyCyrusBundle:User')->findOneBy(array('username' => $exploded[0]));
+    		if($user != null && $user->getDomain()->getName() == $exploded[1])
     		{
     			
     			//TODO: Improve checks such as looking if the user actually as a recovery email. Also, implement the part to send to all the domain admin

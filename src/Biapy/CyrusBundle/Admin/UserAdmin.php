@@ -116,14 +116,7 @@ class UserAdmin extends ExtendedAdmin
     }
     
     public function createQuery($context = 'list')
-    {
-    	
-    	#$i = 0;
-    	#while ($i < 10){
-    	#	var_dump($this->getSecurityContext()->getToken()->getUser()->generateRecoveryToken()->getRecoveryToken());
-    	#	$i++;
-    	#}
-    	
+    {    	
     	//Unless the user is s super admin, we want to show only to the super administrator the user that belong to its domain.
     	$query = parent::createQuery($context);
 		$securityContext = $this->getSecurityContext();

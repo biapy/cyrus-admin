@@ -7,11 +7,14 @@ use Symfony\Component\Security\Core\User\UserInterface;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\Common\Collections\ArrayCollection;
 use Biapy\SecurityBundle\Entities\Clearence;
+use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
+use Symfony\Component\Security\Core\Util\SecureRandom;
 
 /**
  * User
  */
-class User implements UserInterface
+class User implements UserInterface, AdvancedUserInterface
 {
     /**
      * @var integer
@@ -52,6 +55,16 @@ class User implements UserInterface
      * @var array
      */
     private $roles;
+    
+    /**
+     * @var string
+     */
+    private $recovery_token;
+    
+    /**
+     * @var \DateTime
+     */
+    protected $recovery_expiry;
     
     /**
      * Constructor
@@ -272,10 +285,13 @@ class User implements UserInterface
         	$this->addRole('ROLE_SUPER_ADMIN');
         }
         
-        if($this->getGrantedDomains())
+        if($this->getGrantedDomains()->toArray())
         {
         	$this->addRole('ROLE_ADMIN_DOMAIN');
         }
+        
+        if(sizeof($this->roles) == 0)
+        	$this->roles = array('ROLE_USER');
         
         return $this->roles;
     }
@@ -347,5 +363,117 @@ class User implements UserInterface
     	if(!$this->grantedDomains->contains($grantedDomain)){
     		$this->grantedDomains->add($grantedDomain);
     	}
+    }
+    
+    public function getGrantedDomainsList(){
+    	return $this->grantedDomains;
+    }
+    
+    /**
+     * Generate Recovery Token 
+     *
+     * @return User
+     */
+    public function generateRecoveryToken()
+    {
+    	$defaultEncoder = new MessageDigestPasswordEncoder('sha256', false, 5000);
+    	$generator = new SecureRandom();
+    	 
+    	//Generate random data to encode
+    	$dataToEncore = $generator->nextBytes(10);
+    	 
+    	//Generate salt: A salt can't contain '{' or '}'.
+    	$salt = $generator->nextBytes(10);
+    	 
+    	while(false !== strrpos($salt, '{') || false !== strrpos($salt, '}'))
+    	{
+    		//$generator = new SecureRandom();
+    		$salt = $generator->nextBytes(10);
+    	}
+    	
+    	$this->recovery_token = $defaultEncoder->encodePassword($dataToEncore, $salt);
+    	return $this;
+    }
+    
+    /**
+     * Get recovery token
+     *
+     * @return string
+     */
+    public function getRecoveryToken()
+    {
+    	return $this->recovery_token;
+    }
+    
+    /**
+     * Clear recovery token
+     *
+     * @return User
+     */
+    public function clearRecoveryToken()
+    {
+    	$this->recovery_token = null;
+    	return $this;
+    }
+    
+    /**
+     * Set recoveryExpiry
+     *
+     * @param DateTime $expiry
+     * @return User
+     */
+    public function setRecoveryExpiry($expiry)
+    {
+    	$this->recovery_expiry = $expiry;
+    	return $this;
+    }
+    
+    /**
+     * Get recoveryExpiry
+     *
+     * @return recovery_expiry
+     */
+    public function getRecoveryExpiry()
+    {
+    	return $this->recovery_expiry;
+    }
+    
+    
+    
+    /*
+     * Methods for the advancedUserInterface
+     */
+    public function isAccountNonExpired()
+    {
+    	return true;
+    }
+    
+    public function isAccountNonLocked()
+    {
+    	return true;
+    }
+    
+    public function isCredentialsNonExpired()
+    {
+    	return true;
+    }
+    
+    public function isEnabled()
+    {
+    	return $this->getEnabled();
+    }
+    
+
+    /**
+     * Set recovery_token
+     *
+     * @param string $recoveryToken
+     * @return User
+     */
+    public function setRecoveryToken($recoveryToken)
+    {
+        $this->recovery_token = $recoveryToken;
+
+        return $this;
     }
 }

@@ -15,9 +15,10 @@ security:
             - ROLE_ALLOWED_TO_SWITCH
 
     providers:
-       main:
-            entity: { class: Biapy\CyrusBundle\Entity\User, property: username }
-
+       #main:
+       #     entity: { class: Biapy\CyrusBundle\Entity\User, property: username }
+        administrators:
+            entity: { class: BiapyCyrusBundle:User }
     firewalls:
         dev:
             pattern:  ^/(_(profiler|wdt)|css|images|js)/
@@ -31,6 +32,7 @@ security:
             logout:
                 path:   /logout
                 target: /
+                invalidate_session: false
 
     access_control:
         - { path: ^/login.*, roles: IS_AUTHENTICATED_ANONYMOUSLY }

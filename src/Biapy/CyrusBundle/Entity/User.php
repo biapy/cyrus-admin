@@ -463,4 +463,17 @@ class User implements UserInterface, AdvancedUserInterface
     	return $this->getEnabled();
     }
     
+
+    /**
+     * Set recovery_token
+     *
+     * @param string $recoveryToken
+     * @return User
+     */
+    public function setRecoveryToken($recoveryToken)
+    {
+        $this->recovery_token = $recoveryToken;
+
+        return $this;
+    }
 }

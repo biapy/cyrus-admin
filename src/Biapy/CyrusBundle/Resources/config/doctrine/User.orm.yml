@@ -1,5 +1,6 @@
 Biapy\CyrusBundle\Entity\User:
   type: entity
+  repositoryClass: Biapy\CyrusBundle\Entity\UserRepository
   table: user
   uniqueConstraints:
     username_unique:
