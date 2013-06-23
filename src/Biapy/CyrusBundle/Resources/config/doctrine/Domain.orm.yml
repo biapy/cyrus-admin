@@ -21,4 +21,25 @@ Biapy\CyrusBundle\Entity\Domain:
     aliases:
       targetEntity: Alias
       mappedBy: domain
-
+#  manyToMany:
+#    adminUsers:
+#      targetEntity: User
+#      inversedBy: grantedDomains
+#      joinTable:
+#        name: domains_users
+#        joinColumns:
+#          domain_id:
+#            referencedColumnName: id
+#            onDelete: CASCADE
+#            onUpdate: CASCADE
+#        inverseJoinColumns:
+#          user_id:
+#            referencedColumnName: id
+#            unique: false
+#            onDelete: CASCADE
+#            onUpdate: CASCADE
+      
+  manyToMany:
+      adminUsers:
+        targetEntity: User
+        mappedBy: grantedDomains

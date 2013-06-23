@@ -31,6 +31,15 @@ class SenderWatch
 
 
     /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->enabled = true;
+    }
+
+
+    /**
      * Get id
      *
      * @return integer 

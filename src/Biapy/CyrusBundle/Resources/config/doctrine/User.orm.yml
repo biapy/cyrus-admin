@@ -23,15 +23,55 @@ Biapy\CyrusBundle\Entity\User:
     enabled:
       type: boolean
       nullable: false
+      options:
+          default: true
     has_mailbox:
       type: boolean
       nullable: false
+      options:
+          default: true
+    is_super_admin:
+      type: boolean
+      nullable: true
+      options:
+          default: false
+    recovery_token:
+      type: string
+      length: 64
+      nullable: true
+    recovery_expiry:
+      type: datetime
+      nullable: true
   manyToOne:
     domain:
       targetEntity: Domain
       inversedBy: users
       joinColumn:
         name: domain_id
+        nullable: false;
         referencedColumnName: id
         onDelete: CASCADE
         onUpdate: CASCADE
+
+  manyToMany:
+    grantedDomains:
+      targetEntity: Domain
+      inversedBy: adminUsers
+      joinTable:
+        name: domains_users
+        joinColumns:
+          user_id:
+            referencedColumnName: id
+            onDelete: CASCADE
+            onUpdate: CASCADE
+        inverseJoinColumns:
+          domain_id:
+            referencedColumnName: id
+            unique: false
+            onDelete: CASCADE
+            onUpdate: CASCADE
+
+#  manyToMany:
+#    grantedDomains:
+#      targetEntity: Domain
+#      mappedBy: adminUsers

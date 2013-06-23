@@ -1,0 +1,11 @@
+{% extends 'BiapyCyrusBundle::layout.html.twig' %}
+
+{% block title %}Recovery{% endblock %}
+
+{% block body %}
+<p>
+		<a href={{ path('recovery_email_page') }}>Recovery by mail</a><br />
+		<a href={{ path('recovery_admin_page') }}>Notify your domain admin</a>
+		
+</p>
+{% endblock %}

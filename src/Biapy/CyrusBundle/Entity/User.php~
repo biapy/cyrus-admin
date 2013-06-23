@@ -3,11 +3,15 @@
 namespace Biapy\CyrusBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
+use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\ArrayCollection;
+use Biapy\SecurityBundle\Entities\Clearence;
 
 /**
  * User
  */
-class User
+class User implements UserInterface
 {
     /**
      * @var integer
@@ -33,13 +37,40 @@ class User
      * @var boolean
      */
     private $has_mailbox;
+    
+    /**
+     * @var boolean
+     */
+    private $is_super_admin;
 
     /**
      * @var \Biapy\CyrusBundle\Entity\Domain
      */
     private $domain;
-
-
+	
+	/**
+     * @var array
+     */
+    private $roles;
+    
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->enabled = true;
+        $this->has_mailbox = true;
+        $this->role = array('ROLE_USER');
+    }
+    
+    /**
+     * String representation.
+     */
+    public function __toString()
+    {
+    	return strval(sprintf("%s@%s", $this->getUsername(), $this->getDomain()));
+    }
+    
     /**
      * Get id
      *
@@ -141,6 +172,70 @@ class User
     {
         return $this->has_mailbox;
     }
+    
+    /**
+     * Set is_super_admin
+     *
+     * @return boolean
+     */
+    public function setIsSuperAdmin($isSuperAdmin)
+    {
+    	$this->is_super_admin = $isSuperAdmin;
+    	if($isSuperAdmin){
+    		if($this->roles == NULL)
+    		{
+    			$this->roles = array();
+    			$this->addRole('ROLE_SUPER_ADMIN');
+    			return $this;
+    		}
+    		$this->addRole('ROLE_SUPER_ADMIN');
+    	} else {
+    		$this->removeRole('ROLE_SUPER_ADMIN');
+    	}
+    	return $this;
+    }
+    
+    public function addRole($role)
+    {
+    	if(!is_array($this->roles))
+    	{
+    		$this->roles = array();
+    	}
+    	if (!in_array($role, $this->roles))
+    	{
+    		$this->roles[] = $role;
+    	}
+    
+    	return $this;
+    }
+    
+    
+    public function removeRole($role)
+    {
+    	if($this->roles == null)
+    	{
+    		$this->roles = array('ROLE_USER');
+    	}
+    	if (false !== $key = array_search(strtoupper($role), $this->roles))
+    	{
+    		unset($this->roles[$key]);
+    	}
+    
+    	return $this;
+    }
+    
+    
+    
+    
+    /**
+     * Get is_super_admin
+     *
+     * @return boolean
+     */
+    public function getIsSuperAdmin()
+    {
+    	return $this->is_super_admin;
+    }
 
     /**
      * Set domain
@@ -163,5 +258,94 @@ class User
     public function getDomain()
     {
         return $this->domain;
+    }
+    
+    /**
+     * Returns the user roles
+     *
+     * @return array The roles
+     */
+    public function getRoles()
+    {        
+        if($this->getIsSuperAdmin())
+        {
+        	$this->addRole('ROLE_SUPER_ADMIN');
+        }
+        
+        if($this->getGrantedDomains())
+        {
+        	$this->addRole('ROLE_ADMIN_DOMAIN');
+        }
+        
+        return $this->roles;
+    }
+        
+    public function setRoles(array $roles)
+    {
+        $this->roles = array_unique(array_filter($roles));
+
+        return $this;
+    }
+        
+   	public function getSalt(){
+   		return null;
+   	}
+    
+  
+    
+    
+    /**
+     * @inheritDoc
+     */
+    public function eraseCredentials()
+    {
+    }
+    
+    public function __sleep()
+    {
+    	return array('id');
+    }
+    /**
+     * @var \Doctrine\Common\Collections\Collection
+     */
+    private $grantedDomains;
+
+    /**
+     * Add grantedDomains
+     *
+     * @param \Biapy\CyrusBundle\Entity\Domain $grantedDomains
+     * @return User
+     */
+    public function addGrantedDomain(\Biapy\CyrusBundle\Entity\Domain $grantedDomains)
+    {
+        $this->grantedDomains[] = $grantedDomains;
+
+        return $this;
+    }
+
+    /**
+     * Remove grantedDomains
+     *
+     * @param \Biapy\CyrusBundle\Entity\Domain $grantedDomains
+     */
+    public function removeGrantedDomain(\Biapy\CyrusBundle\Entity\Domain $grantedDomains)
+    {
+        $this->grantedDomains->removeElement($grantedDomains);
+    }
+
+    /**
+     * Get grantedDomains
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getGrantedDomains()
+    {
+        return $this->grantedDomains;
+    }
+    
+    public function addGrantedDomains($grantedDomain){
+    	if(!$this->grantedDomains->contains($grantedDomain)){
+    		$this->grantedDomains->add($grantedDomain);
+    	}
     }
 }
