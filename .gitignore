@@ -1,12 +1,14 @@
 /app/cache/*
 /app/logs/*
+composer.phar
+app/config/parameters.yml
+web/app_dev.php
+vendor/*
 *eclipse*
 *.config
-app/config/parameters.yml
 app/config/parameters.yml.back
 .buildpath
 .project
 .settings
-web/app_dev.php
 .DS_Store
 ._.*
