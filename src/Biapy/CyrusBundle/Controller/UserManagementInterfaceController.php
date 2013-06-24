@@ -8,6 +8,7 @@ use Biapy\CyrusBundle\Form\UserType;
 
 class UserManagementInterfaceController extends Controller
 {
+	
     public function indexAction()
     {
    		$name = $this->get('security.context')->getToken()->getUser()->getUsername();
@@ -26,8 +27,10 @@ class UserManagementInterfaceController extends Controller
     	$form = $this	->createFormBuilder($user)
     					->add('username', 'text')
     					->getForm();
-
+		
     	$request = $this->getRequest();
+    	
+    	$defaultRecoveryEmailOptions = array('form' => $form->createView(), 'flash' => 'This user doesn\'t exist', 'message' => 'Recovery by mail:', 'validToken' => false);
     	
     	if($this->getRequest()->isMethod('POST'))
     	{
@@ -39,7 +42,7 @@ class UserManagementInterfaceController extends Controller
     		$exploded = explode('@', $user->getUsername());
     		if(sizeof($exploded) != 2)
     		{
-    			return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'This user doesn\'t exist'));
+    			return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', $defaultRecoveryEmailOptions);
     		}
     		
     		//Doctrine query
@@ -89,15 +92,14 @@ class UserManagementInterfaceController extends Controller
     			$this->get('mailer')->send($message);
     			*/
     			
-    			//DEBUG: To be removed
     			return $this->render('BiapyCyrusBundle:Default:mailRecoveryTemplate.html.twig', array('toUser' => true, 'toAdmins' => false, 'user' => $user->getUsername(), 'date' => $date,  'token' => $user->getRecoveryToken()));
     		}
     		
-    		return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'This user doesn\'t exist'));
+    		return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', $defaultRecoveryEmailOptions);
     		
     	}
     	    	
-    	return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => ''));
+    	return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => false, 'message' => 'Please insert the username of the account to recover', 'validToken' => false));
     	
     }
     
@@ -133,35 +135,47 @@ class UserManagementInterfaceController extends Controller
     		return $this->render('BiapyCyrusBundle:Default:recovery.html.twig');
     	}
     	
-    	$user = new User();
-    	$form = $this	->createFormBuilder($user)
-    					->add('username', 'text')
-    					->getForm();
     	$entityManager = $this->getDoctrine()->getManager();
     	$user = $entityManager->getRepository('BiapyCyrusBundle:User')->findOneBy(array('recovery_token' => $token));
+    	
+    	
+    	
+    	
+    	if($this->getRequest()->isMethod('POST') && $user != null){
+    		$form = $this	->createFormBuilder($user)
+    								->add('password', 'password')
+    								->getForm();
+    		$form->bindRequest($this->getRequest());
+    		$user->setPassword($form->getData()->getPassword());
 
-				
+    		$entityManager->persist($user);
+    		$entityManager->flush();
+    		return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => false, 'flash' => false, 'message' =>'Password successfully changed!'));
+    	}
+    	
+    	
 		if($user != null){
-			//TODO: When debug over, uncomment next line
+			$form = $this	->createFormBuilder($user)
+							->add('username', 'text')
+							->getForm();
+			
 			//$user->clearRecoveryToken();
 			$expirtyDate = $user->getRecoveryExpiry();
 			$currentDate = new \DateTime();
 			
 			//Look if the recovery is no more than 24h old:
 			if( $currentDate->diff($expirtyDate)->format("%H") > 24){
-				
-				return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'Token too old!'));
-				
+				return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'Token too old!', 'message' => 'Recovery by mail:'));
 			}
 			
-			//TODO: Recovery form
-			return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'TODO: Recovery form'));
-			
-			
-			   
+			$user = new User();
+			$formPassword = $this	->createFormBuilder($user)
+									->add('password', 'password')
+									->getForm();
+			return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $formPassword->createView(), 'flash' => false, 'message' => 'Please insert a new password:', 'validToken' => true, 'token' => $token ));
 		}
 				
-		return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'Token not found!'));
+		return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'Token not found!', 'message' => 'Recovery by mail:', 'validToken' => false));
 				
     }
 }

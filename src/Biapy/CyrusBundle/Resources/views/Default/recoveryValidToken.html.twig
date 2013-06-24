@@ -14,26 +14,15 @@
 	<div class="sonata-bc" align="center">
 		<div class="connection">
 			{% if flash %}
-				<div class="alert alert-error">{{ flash }}</div>
+			<div class="alert alert-error">{{ flash }}</div>
 			{%  endif %}
-			<h3>{{ message }}</h3><br/>
-			{% if form %}
-				{% if validToken %}
-					<div class="form">
-						<form action={{ path('recovery_token_page', { 'token': token }) }} method="post">
-							{{ form_widget(form) }}
-							<input type="submit" />
-							</form><br />
-					</div>
-				{%  else %}
-					<div class="form">
-						<form action={{ path('recovery_email_page') }} method="post">
-							{{ form_widget(form) }}
-							<input type="submit" />
-							</form><br />
-					</div>
-				{% endif %}
-			{% endif %}
+			<h3>Please enter the new password:</h3><br/>
+			<div class="form">
+				<form action={{ path('recovery_email_page') }} method="post">
+					{{ form_widget(form) }}
+					<input type="submit" />
+					</form><br />
+			</div>
 		</div>
 	</div>
 {% endblock %}
