@@ -138,28 +138,24 @@ class UserManagementInterfaceController extends Controller
     	$entityManager = $this->getDoctrine()->getManager();
     	$user = $entityManager->getRepository('BiapyCyrusBundle:User')->findOneBy(array('recovery_token' => $token));
     	
-    	
-    	
-    	
-    	if($this->getRequest()->isMethod('POST') && $user != null){
+    	if($user != null && $this->getRequest()->isMethod('POST')){
     		$form = $this	->createFormBuilder($user)
     								->add('password', 'password')
     								->getForm();
     		$form->bindRequest($this->getRequest());
     		$user->setPassword($form->getData()->getPassword());
-
+    		$user->clearRecoveryToken();
+    		
     		$entityManager->persist($user);
     		$entityManager->flush();
     		return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => false, 'flash' => false, 'message' =>'Password successfully changed!'));
     	}
-    	
     	
 		if($user != null){
 			$form = $this	->createFormBuilder($user)
 							->add('username', 'text')
 							->getForm();
 			
-			//$user->clearRecoveryToken();
 			$expirtyDate = $user->getRecoveryExpiry();
 			$currentDate = new \DateTime();
 			
@@ -174,7 +170,13 @@ class UserManagementInterfaceController extends Controller
 									->getForm();
 			return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $formPassword->createView(), 'flash' => false, 'message' => 'Please insert a new password:', 'validToken' => true, 'token' => $token ));
 		}
-				
+
+		//user is null
+		$user = new User();
+		$form = $this	->createFormBuilder($user)
+						->add('username', 'text')
+						->getForm();
+		
 		return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'Token not found!', 'message' => 'Recovery by mail:', 'validToken' => false));
 				
     }
