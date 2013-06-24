@@ -12,7 +12,7 @@ class UnauthorizedAccessController extends Controller
     {
     	if($this->get('security.context')->isGranted('ROLE_USER'))
     	{
-			return $this->redirect($this->generateUrl('user_interface_homepage'));
+			return $this->redirect($this->generateUrl('user_edit_page'));
     	} 
     	else 
     	{

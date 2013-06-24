@@ -10,17 +10,7 @@ class UserType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
-        $builder
-//           ->add('username')
-            ->add('password')
-//            ->add('enabled')
-//            ->add('has_mailbox')
-//            ->add('is_super_admin')
-//            ->add('recovery_token')
-//            ->add('recovery_expiry')
-//            ->add('domain')
-//            ->add('grantedDomains')
-        ;
+        $builder->add('password', 'password');
     }
 
     public function setDefaultOptions(OptionsResolverInterface $resolver)

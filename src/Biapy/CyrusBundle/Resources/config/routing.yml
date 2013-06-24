@@ -6,9 +6,9 @@ unauthorized_page:
     pattern: /unauthorized
     defaults: { _controller: BiapyCyrusBundle:UnauthorizedAccess:unauthorized }
 
-user_interface_homepage:
-    pattern:  /user
-    defaults: { _controller: BiapyCyrusBundle:UserManagementInterface:index }
+#user_interface_homepage:
+#    pattern:  /user
+#    defaults: { _controller: BiapyCyrusBundle:UserManagementInterface:index }
     
 user_edit_page:
     pattern: /user/edit

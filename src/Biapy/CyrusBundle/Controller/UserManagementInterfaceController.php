@@ -118,16 +118,16 @@ class UserManagementInterfaceController extends Controller
     	
     	if($request->isMethod('POST'))
     	{
-            $form->bindRequest($request); /* Look in the request everything that can be sueful for the form */
+            $form->bindRequest($request); /* Look in the request everything that can be useful for the form */
             
             $user = $form->getData();
             $entityManager->persist($user);
             $entityManager->flush();
             
-            return $this->redirect($this->generateUrl('user_interface_homepage'));
+            return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => false, 'message' => 'Password correctly changed!'));
         }
         
-    	return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => $form->createView()));
+    	return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => $form->createView(), 'message' => 'As a user, you can only change your password:'));
     }
     
     public function recoveryTokenAction($token){
@@ -161,7 +161,7 @@ class UserManagementInterfaceController extends Controller
 			
 			//Look if the recovery is no more than 24h old:
 			if( $currentDate->diff($expirtyDate)->format("%H") > 24){
-				return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'Token too old!', 'message' => 'Recovery by mail:'));
+				return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'Token too old!', 'message' => 'Recovery by mail:', 'validToken' => false));
 			}
 			
 			$user = new User();

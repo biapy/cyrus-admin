@@ -1,16 +1,27 @@
 {% extends 'BiapyCyrusBundle::layout.html.twig' %}
 
-{% block title %}Edit{% endblock %}
+{% block title %}User Settings{% endblock %}
+
+{% block stylesheets %}
+	<!-- Sonata AdminBundle stylesheets -->
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all"  />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/css/layout.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/css/colors.css') }}" type="text/css" media="all" />
+{% endblock %}
 
 {% block body %}
-<p>
-	User Management Board
-</p>
-
-<form action={{ path('user_edit_page') }} method="post">
-
-	{{ form_widget(form) }}
-
-	<input type="submit" />
-</form>
+	<div class="sonata-bc" align="center">
+		<div class="connection">
+			<h3>{{ message }}</h3><br/>
+			{% if form %}
+				<div class="form">
+					<form action={{ path('user_edit_page') }} method="post">
+						{{ form_widget(form) }}
+						<input type="submit" />
+						</form><br />
+				</div>
+			{% endif %}
+		</div>
+	</div>
 {% endblock %}
