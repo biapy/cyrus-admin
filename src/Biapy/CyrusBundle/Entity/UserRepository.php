@@ -19,16 +19,25 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 {
 	public function loadUserByUsername($username)
 	{
-		$exploded = explode('@', $username);		
-		$em = $this->_em;
-		$user = $em->getRepository("BiapyCyrusBundle:User")->findOneBy(array('username' => $exploded[0]));
+		//input analysis
+		$exploded = explode('@', $username);
+		if(sizeof($exploded) != 2) return null;
 		
-				
-		if(sizeof($exploded) == 2 && $user->getDomain()->getName() == $exploded[1]){
-			return $user;
-		}
+		//Doctrine query
+		$query = $this	->createQueryBuilder('u')
+						->select('u')->from('Biapy\CyrusBundle\Entity\User', 'q')
+						->innerJoin('u.domain', 'd')
+						->where('u.username = :username AND d.name = :domain')
+						->setParameter('username', $exploded[0])
+						->setParameter('domain', $exploded[1])
+						->getQuery();
+		$users = $query->getResult();
 		
-		return null;
+		//If less than 1 obtained, user doesn't exist.
+		if(sizeof($users) != 1) return null;
+		
+		return $users[0];
+		
 	}
 	
 	public function refreshUser(UserInterface $user)

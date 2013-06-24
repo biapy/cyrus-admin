@@ -34,22 +34,36 @@ class UserManagementInterfaceController extends Controller
     		$entityManager = $this->getDoctrine()->getManager();
     		$form->bind($request);
     		$user = $form->getData();
-    		$exploded = explode('@', $user->getUsername());
     		
+    		//input analysis
+    		$exploded = explode('@', $user->getUsername());
     		if(sizeof($exploded) != 2)
     		{
     			return $this->render('BiapyCyrusBundle:Default:recoveryEmail.html.twig', array('form' => $form->createView(), 'flash' => 'This user doesn\'t exist'));
     		}
     		
-    		$user = $entityManager->getRepository('BiapyCyrusBundle:User')->findOneBy(array('username' => $exploded[0]));
-    		if($user != null && $user->getDomain()->getName() == $exploded[1])
+    		//Doctrine query
+    		$repository = $this->getDoctrine()->getRepository('BiapyCyrusBundle:User');
+    		$query = $repository	->createQueryBuilder('u')
+    								->select('u')->from('Biapy\CyrusBundle\Entity\User', 'q')
+    								->innerJoin('u.domain', 'd')
+    								->where('u.username = :username AND d.name = :domain')
+    								->setParameter('username', $exploded[0])
+    								->setParameter('domain', $exploded[1])
+    								->getQuery();
+    		
+    		$users = $query->getResult();
+    		
+    		if($users != null && sizeof($users) == 1 && $users[0]->getDomain()->getName() == $exploded[1])
     		{
     			
     			//TODO: Improve checks such as looking if the user actually as a recovery email. Also, implement the part to send to all the domain admin
-    			
+    			//Recovery granted
+    			$user = $users[0];
     			$date = new \DateTime();
     			$user->generateRecoveryToken();
     			$user->setRecoveryExpiry($date);
+    			
     			$entityManager->flush($user);
     			
     			//DEBUG: Uncomment when ready
@@ -72,7 +86,8 @@ class UserManagementInterfaceController extends Controller
     								)
     								
     			);
-    			$this->get('mailer')->send($message);*/
+    			$this->get('mailer')->send($message);
+    			*/
     			
     			//DEBUG: To be removed
     			return $this->render('BiapyCyrusBundle:Default:mailRecoveryTemplate.html.twig', array('toUser' => true, 'toAdmins' => false, 'user' => $user->getUsername(), 'date' => $date,  'token' => $user->getRecoveryToken()));
