@@ -2,10 +2,20 @@
 
 {% block title %}Recovery{% endblock %}
 
+{% block stylesheets %}
+	<!-- Sonata AdminBundle stylesheets -->
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all"  />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/css/layout.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/css/colors.css') }}" type="text/css" media="all" />
+{% endblock %}
+
 {% block body %}
-<p>
+<div align="center">
+	<h4>Please choose a recovery method</h4>
+	<p class="sonata-bc">
 		<a href={{ path('recovery_email_page') }}>Recovery by mail</a><br />
 		<a href={{ path('recovery_admin_page') }}>Notify your domain admin</a>
-		
-</p>
+	</p>
+</div>
 {% endblock %}

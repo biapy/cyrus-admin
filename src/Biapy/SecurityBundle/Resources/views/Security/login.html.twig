@@ -1,15 +1,32 @@
-{% if error %}
-    <div>{{ error.message }}</div>
-{% endif %}
+{% extends 'BiapyCyrusBundle::layout.html.twig' %}
 
-<form action="{{ path('login_check') }}" method="post">
-    <label for="username">Username:</label>
-    <input type="text" id="username" name="_username" value="{{ last_username }}" />
+{% block stylesheets %}
+	<!-- Sonata AdminBundle stylesheets -->
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all"  />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/css/layout.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/css/colors.css') }}" type="text/css" media="all" />
+{% endblock %}
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="_password" />
-
-    <button type="submit">login</button>
-    
-    <a href={{ path('recovery_page') }}>Password recovery</a>
-</form>
+{% block body %}
+	<div class="sonata-bc" align="center">
+		<div class="connection">
+			{% if error %}
+			<div class="alert alert-error">{{ error.message }}</div>
+			{% endif %}
+		<div class="form">
+			<form action="{{ path('login_check') }}" method="post">
+		    	<label class="control-group" for="username">Username:</label>
+		    	<input type="text" id="username" name="_username" value="{{ last_username }}" />
+				<br />
+		    	<label class="control-group" for="password">Password:</label>
+		    	<input type="password" id="password" name="_password" />
+				<br />
+		    	<button type="submit">login</button>	
+			</form>
+		</div>
+		<a href={{ path('recovery_page') }}>Password recovery</a>
+	</div>
+	
+	
+{% endblock %}

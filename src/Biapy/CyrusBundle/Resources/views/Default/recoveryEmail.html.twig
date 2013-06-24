@@ -2,18 +2,27 @@
 
 {% block title %}Recovery by mail{% endblock %}
 
+{% block stylesheets %}
+	<!-- Sonata AdminBundle stylesheets -->
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/bootstrap/css/bootstrap.min.css') }}" type="text/css" media="all"  />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/bootstrap/css/bootstrap-responsive.min.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/css/layout.css') }}" type="text/css" media="all" />
+    <link rel="stylesheet" href="{{ asset('bundles/sonataadmin/css/colors.css') }}" type="text/css" media="all" />
+{% endblock %}
+
 {% block body %}
-
-<div align="center">{{ flash }}</div>
-
-<p>
-	Recovery by mail
-</p>
-
-<form action={{ path('recovery_email_page') }} method="post">
-
-	{{ form_widget(form) }}
-
-	<input type="submit" />
-</form>
+	<div class="sonata-bc" align="center">
+		<div class="connection">
+			{% if flash %}
+			<div class="alert alert-error">{{ flash }}</div>
+			{%  endif %}
+			<h3>Recovery by mail:</h3><br/>
+			<div class="form">
+				<form action={{ path('recovery_email_page') }} method="post">
+					{{ form_widget(form) }}
+					<input type="submit" />
+					</form><br />
+			</div>
+		</div>
+	</div>
 {% endblock %}
