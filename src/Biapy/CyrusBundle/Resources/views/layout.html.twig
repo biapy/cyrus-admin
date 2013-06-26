@@ -13,7 +13,26 @@
 	</head>
 
 	<body>
+		{% block bar %}
+			<div class="sonata-bc sonata-ba-no-side-menu">
+				<div class="navbar navbar-fixed-top">
+					<div class="navbar-inner">
+					
+						<div class="container-fluid">
+							<div class="navbar-text pull-left">
+							<img src="/cyrus-admin/web/bundles/sonataadmin/logo_title.png" alt="Cyrus Admin">Cyrus Admin
+							</div>
+							<div class="navbar-text pull-right">
+								
+						        {{ include('BiapyCyrusBundle:Admin:admin_topnav.html.twig') }}
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		{% endblock %}
 		{%  block body %}
 		{%  endblock %}
+
 	</body>
 </html>
