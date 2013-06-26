@@ -112,20 +112,48 @@ class UserManagementInterfaceController extends Controller
     public function editAction()
     {
     	
-    	$entityManager = $this->getDoctrine()->getEntityManager();
+    	/*$entityManager = $this->getDoctrine()->getEntityManager();
     	$form = $this->createForm(new UserType(), $this->get('security.context')->getToken()->getUser());
     	$request = $this->getRequest();
     	
     	if($request->isMethod('POST'))
     	{
-            $form->bindRequest($request); /* Look in the request everything that can be useful for the form */
+            $form->bindRequest($request); //Look in the request everything that can be useful for the form 
             
             $user = $form->getData();
             $entityManager->persist($user);
             $entityManager->flush();
             
             return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => false, 'message' => 'Password correctly changed!'));
-        }
+        } */
+    	
+    	$entityManager = $this->getDoctrine()->getEntityManager();
+    	$form = $this	->createFormBuilder(array())
+    					->add('old_password', 'password')
+    					->add('new_password', 'password')
+    					->getForm();
+    	$request = $this->getRequest();
+    	if($request->isMethod('POST'))
+    	{
+    		$form->bindRequest($request);
+    		$data = $form->getData();
+    		$user = $this->getUser();
+    		if($user->getPassword() == $data['old_password'] && '' != $data['new_password'] && null != $data['new_password'])
+    		{
+    			$user->setPassword($data['new_password']);
+    			$entityManager->persist($user);
+    			$entityManager->flush();
+    			return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => false, 'message' => 'Password correctly changed!'));
+    		}
+    		else
+    		{
+    			return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => $form->createView(), 'message' => 'Wrong password'));
+    		}
+    		
+    		
+    	}
+    	
+    	
         
     	return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => $form->createView(), 'message' => 'As a user, you can only change your password:'));
     }

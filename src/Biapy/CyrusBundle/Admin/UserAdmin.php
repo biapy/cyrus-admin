@@ -14,11 +14,6 @@ use Sonata\AdminBundle\Show\ShowMapper;
 use Biapy\CyrusBundle\Extension\ExtendedAdmin;
 use Biapy\CyrusBundle\Entity\User;
 
-//TODO REMOVE:
-use Symfony\Component\Security\Core\Util\SecureRandom;
-use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
-use Symfony\Component\Security\Core\Exception;
-
 class UserAdmin extends ExtendedAdmin
 {
     // setup the defaut sort column and order
