@@ -46,7 +46,7 @@ Biapy\CyrusBundle\Entity\User:
     recovery_mail:
       type: string
       length: 255;
-      nullable: false
+      nullable: true
   manyToOne:
     domain:
       targetEntity: Domain
