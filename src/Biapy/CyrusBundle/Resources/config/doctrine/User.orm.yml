@@ -43,6 +43,10 @@ Biapy\CyrusBundle\Entity\User:
     recovery_expiry:
       type: datetime
       nullable: true
+    recovery_mail:
+      type: string
+      length: 255;
+      nullable: false
   manyToOne:
     domain:
       targetEntity: Domain

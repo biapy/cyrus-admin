@@ -112,50 +112,50 @@ class UserManagementInterfaceController extends Controller
     public function editAction()
     {
     	
-    	/*$entityManager = $this->getDoctrine()->getEntityManager();
-    	$form = $this->createForm(new UserType(), $this->get('security.context')->getToken()->getUser());
-    	$request = $this->getRequest();
-    	
-    	if($request->isMethod('POST'))
-    	{
-            $form->bindRequest($request); //Look in the request everything that can be useful for the form 
-            
-            $user = $form->getData();
-            $entityManager->persist($user);
-            $entityManager->flush();
-            
-            return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => false, 'message' => 'Password correctly changed!'));
-        } */
-    	
     	$entityManager = $this->getDoctrine()->getEntityManager();
     	$form = $this	->createFormBuilder(array())
-    					->add('old_password', 'password')
-    					->add('new_password', 'password')
+    					->add('old_password', 'password', array('required' => false))
+    					->add('new_password', 'password', array('required' => false))
+    					->add('recovery_email', 'email', array('data' => $this->getUser()->getRecoveryMail()))
     					->getForm();
+
     	$request = $this->getRequest();
     	if($request->isMethod('POST'))
     	{
     		$form->bindRequest($request);
     		$data = $form->getData();
     		$user = $this->getUser();
-    		if($user->getPassword() == $data['old_password'] && '' != $data['new_password'] && null != $data['new_password'])
+    		$message = "";
+    		
+    		//Password
+    		if($data['old_password'] != '')
     		{
-    			$user->setPassword($data['new_password']);
-    			$entityManager->persist($user);
-    			$entityManager->flush();
-    			return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => false, 'message' => 'Password correctly changed!'));
-    		}
-    		else
-    		{
-    			return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => $form->createView(), 'message' => 'Wrong password'));
+    			if( '' != $data['new_password'] && '' != $data['old_password'] && $user->getPassword() == $data['old_password'] ){
+    				$user->setPassword($data['new_password']);
+    				$entityManager->persist($user);
+    				$entityManager->flush();
+	    			$message .= "Password correctly changed!";
+    			}else
+    				$message .= "Wrong password";
+    			
     		}
     		
+    		//Recovery email
+    		if($data['recovery_email'] != $this->getUser()->getRecoveryMail()){
+    			if($data['recovery_email'] != ''){
+    				$user->setRecoveryMail($data['recovery_email']);
+    				$entityManager->persist($user);
+    				$entityManager->flush();
+    				$message .= "\nRecovery mail correctly changed!";
+    			} else 
+    				$message .= "\nThe recovery mai has to be a non empty mail!";
+    		}
+    		
+    		return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => $form->createView(), 'message' => $message));
     		
     	}
     	
-    	
-        
-    	return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => $form->createView(), 'message' => 'As a user, you can only change your password:'));
+    	return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => $form->createView(), 'message' => 'User setting panel'));
     }
     
     public function recoveryTokenAction($token){

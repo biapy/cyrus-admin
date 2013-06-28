@@ -10,6 +10,7 @@ use Biapy\SecurityBundle\Entities\Clearence;
 use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Security\Core\Encoder\MessageDigestPasswordEncoder;
 use Symfony\Component\Security\Core\Util\SecureRandom;
+use Symfony\Component\Translation\Tests\String;
 
 /**
  * User
@@ -65,6 +66,11 @@ class User implements UserInterface, AdvancedUserInterface
      * @var \DateTime
      */
     protected $recovery_expiry;
+    
+    /**
+     * @var String
+     */
+    private $recovery_mail;
     
     /**
      * Constructor
@@ -475,5 +481,28 @@ class User implements UserInterface, AdvancedUserInterface
         $this->recovery_token = $recoveryToken;
 
         return $this;
+    }
+    
+    /**
+     * Get recovery mail
+     *
+     * @return boolean
+     */
+    public function getRecoveryMail()
+    {
+    	return $this->recovery_mail;
+    }
+    
+    /**
+     * Set has_mailbox
+     *
+     * @param boolean $hasMailbox
+     * @return User
+     */
+    public function setRecoveryMail($recovery_mail)
+    {
+    	$this->recovery_mail = $recovery_mail;
+    
+    	return $this;
     }
 }
