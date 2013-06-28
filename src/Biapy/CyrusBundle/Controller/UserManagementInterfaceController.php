@@ -116,7 +116,7 @@ class UserManagementInterfaceController extends Controller
     	$form = $this	->createFormBuilder(array())
     					->add('old_password', 'password', array('required' => false))
     					->add('new_password', 'password', array('required' => false))
-    					->add('recovery_email', 'email', array('data' => $this->getUser()->getRecoveryMail()))
+    					->add('recovery_email', 'email', array('data' => $this->getUser()->getRecoveryMail(), 'required' => false))
     					->getForm();
 
     	$request = $this->getRequest();
@@ -142,19 +142,14 @@ class UserManagementInterfaceController extends Controller
     		
     		//Recovery email
     		if($data['recovery_email'] != $this->getUser()->getRecoveryMail()){
-    			if($data['recovery_email'] != ''){
     				$user->setRecoveryMail($data['recovery_email']);
     				$entityManager->persist($user);
     				$entityManager->flush();
     				$message .= "\nRecovery mail correctly changed!";
-    			} else 
-    				$message .= "\nThe recovery mai has to be a non empty mail!";
     		}
     		
     		return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => $form->createView(), 'message' => $message));
-    		
     	}
-    	
     	return $this->render('BiapyCyrusBundle:Default:editUser.html.twig', array('form' => $form->createView(), 'message' => 'User setting panel'));
     }
     
