@@ -22,28 +22,26 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 		//input analysis
 		$exploded = explode('@', $username);
 		if(sizeof($exploded) != 2) return null;
-		
+
 		//Doctrine query
-		$query = $this	->createQueryBuilder('u')
-						->select('u')->from('Biapy\CyrusBundle\Entity\User', 'q')
-						->innerJoin('u.domain', 'd')
-						->where('u.username = :username AND d.name = :domain')
-						->setParameter('username', $exploded[0])
-						->setParameter('domain', $exploded[1])
-						->getQuery();
-		$users = $query->getResult();
-		
-		//If less than 1 obtained, user doesn't exist.
-		if(sizeof($users) != 1) return null;
-		
-		return $users[0];
-		
+		return $this->createQueryBuilder('u')
+					->innerJoin('u.domain', 'd')
+    				->where('u.username = :username')
+    				->andWhere('d.name = :domain')
+    				->andWhere('u.enabled = :enabled')
+    				->setParameter('username', $exploded[0])
+    				->setParameter('domain', $exploded[1])
+                    ->setParameter('enabled', '1')
+					->setMaxResults(1)
+					->getQuery()
+					->getOneOrNullResult();
 	}
-	
+
 	public function refreshUser(UserInterface $user)
 	{
 		$class = get_class($user);
-		if (!$this->supportsClass($class)) {
+		if (!$this->supportsClass($class))
+		{
 			throw new UnsupportedUserException(
 					sprintf(
 							'Instances of "%s" are not supported.',
@@ -51,10 +49,10 @@ class UserRepository extends EntityRepository implements UserProviderInterface
 					)
 			);
 		}
-	
+
 		return $this->find($user->getId());
 	}
-	
+
 	public function supportsClass($class)
 	{
 		return $this->getEntityName() === $class

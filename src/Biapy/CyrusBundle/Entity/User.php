@@ -81,15 +81,20 @@ class User implements UserInterface, AdvancedUserInterface
         $this->has_mailbox = true;
         $this->role = array('ROLE_USER');
     }
-    
+
+    public function getEmail()
+    {
+        return strval(sprintf("%s@%s", $this->getUsername(), $this->getDomain()));
+    }
+
     /**
      * String representation.
      */
     public function __toString()
     {
-    	return strval(sprintf("%s@%s", $this->getUsername(), $this->getDomain()));
+        return $this->getEmail();
     }
-    
+
     /**
      * Get id
      *

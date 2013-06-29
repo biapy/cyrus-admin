@@ -192,4 +192,17 @@ class Alias
         }
       }
     }
+
+    public function getEmail()
+    {
+        return strval(sprintf("%s@%s", $this->getAliasname(), $this->getDomain() ? $this->getDomain() : '*'));
+    }
+
+    /**
+     * String representation.
+     */
+    public function __toString()
+    {
+        return $this->getEmail();
+    }
 }
