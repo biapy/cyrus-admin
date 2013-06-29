@@ -1,10 +1,10 @@
 {% extends 'BiapyCyrusBundle::layout.html.twig' %}
 
 {% block title %}
-	{%  if toAdmins %}
+	{%  if toAdmins is defined %}
 		Recovery password of {{ user }}
 	{%  endif %}
-	{%  if toUser %}
+	{%  if toUser is defined%}
 		Recovery
 	{%  endif %}
 {% endblock %}
@@ -13,18 +13,19 @@
 
 {%  block body %}
 	<div class="sonata-bc">
-			{%  if toAdmins %}
+			{%  if toAdmins is defined%}
 		
-				<p>User {{ user }} request a password recovery the {{ date|date('Y-m-d') }} at {{ date|date('H:i:s') }}</p>
-		
+				<p>User {{ user }} requested a password recovery the {{ date|date('Y-m-d') }} at {{ date|date('H:i:s') }}</p>
+				<p>The user wrote this custom message:<br />{{ added_message }}
+
 			{% endif %}
 		
-			{%  if toUser %}
+			{%  if toUser  is defined%}
 			
 					<p>	Hello {{ user }}<br />
 						You asked for a password recovery the {{ date|date('Y-m-d') }} at {{ date|date('H:i:s') }}. If you didn't, please ignore this mail.<br />
 						In order to recover your password, please follow the link:<br />
-						<a href="http://192.168.1.85{{ path('recovery_token_page', { 'token': token }) }}">http://192.168.1.85{{ path('recovery_token_page', { 'token': token }) }}</a>
+						<a href="{{ baseurl }}{{ path('recovery_token_page', { 'token': token }) }}">I want to recover my password!</a>
 					</p>
 		
 			{% endif %}

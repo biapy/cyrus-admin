@@ -1,6 +1,6 @@
 {% extends 'BiapyCyrusBundle::layout.html.twig' %}
 
-{% block title %}Recovery by mail{% endblock %}
+{% block title %}Recovery{% endblock %}
 
 {% block bar %}{% endblock %}
 
@@ -10,23 +10,14 @@
 			{% if flash is defined %}
 				<div class="alert alert-error">{{ flash }}</div>
 			{%  endif %}
-			{% if message is defined %}<h3>{{ message }}</h3><br/>{% endif %}
+			<h3>{{ message }}</h3><br/>
 			{% if form is defined %}
-				{% if validToken %}
 					<div class="form">
-						<form action={{ path('recovery_token_page', { 'token': token }) }} method="post">
+						<form action={{ path('recovery_admin_page') }} method="post">
 							{{ form_widget(form) }}
 							<input type="submit" />
 							</form><br />
 					</div>
-				{%  else %}
-					<div class="form">
-						<form action={{ path('recovery_email_page') }} method="post">
-							{{ form_widget(form) }}
-							<input type="submit" />
-							</form><br />
-					</div>
-				{% endif %}
 			{% endif %}
 		</div>
 	</div>
