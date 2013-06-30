@@ -6,6 +6,7 @@ app/bootstrap.php.cache
 web/app_dev.php
 web/bundles/*
 vendor/*
+*~
 composer.lock
 *eclipse*
 *.config
