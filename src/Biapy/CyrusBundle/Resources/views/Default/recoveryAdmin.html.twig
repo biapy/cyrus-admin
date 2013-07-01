@@ -10,7 +10,7 @@
 			{% if flash is defined %}
 				<div class="alert alert-error">{{ flash }}</div>
 			{%  endif %}
-			<h3>{{ message }}</h3><br/>
+			<h4>{{ message }}</h4><br/>
 			{% if form is defined %}
 					<div class="form">
 						<form action={{ path('recovery_admin_page') }} method="post">

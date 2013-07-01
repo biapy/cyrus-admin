@@ -6,10 +6,14 @@
 
 {% block body %}
 <div align="center">
-	<h4>Please choose a recovery method</h4>
-	<p class="sonata-bc">
-		<a href={{ path('recovery_email_page') }}>Recovery by mail</a><br />
-		<a href={{ path('recovery_admin_page') }}>Notify your domain admin</a>
+	<div class="sonata-bc" align="center">
+		<div class="connection">
+			<h4>Please choose a recovery method</h4>
+			<p class="sonata-bc">
+				<a href={{ path('recovery_email_page') }}>Recovery by mail</a><br />
+				<a href={{ path('recovery_admin_page') }}>Notify your domain admin</a>
+			</div>
+		</div>
 	</p>
 </div>
 {% endblock %}
