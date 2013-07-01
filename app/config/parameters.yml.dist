@@ -13,3 +13,5 @@ parameters:
 
     locale:            en
     secret:            8291d9b3837055dd86e671ccd6bc2589
+
+    logo:               bundles/sonataadmin/logo_title.png

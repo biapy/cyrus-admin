@@ -74,9 +74,10 @@ doctrine:
 
 sonata_admin:
   title: Cyrus Admin
+  title_logo: %logo%
   templates:
     user_block: BiapyCyrusBundle:Admin:admin_topnav.html.twig
- 
+
 sonata_block:
     default_contexts: [cms]
     blocks:
@@ -85,6 +86,11 @@ sonata_block:
 
         sonata.block.service.text:
         sonata.block.service.rss:
+
+twig:
+    globals:
+        logo: %logo%
+
 
 lunetics_locale:
     allowed_locales:
