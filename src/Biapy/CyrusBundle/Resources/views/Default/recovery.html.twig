@@ -1,6 +1,6 @@
 {% extends 'BiapyCyrusBundle::layout.html.twig' %}
 
-{% block title %}Recovery{% endblock %}
+{% block title %}{{ "Recovery"|trans }}{% endblock %}
 
 {% block bar %}{% endblock %}
 
@@ -8,10 +8,10 @@
 <div align="center">
 	<div class="sonata-bc" align="center">
 		<div class="connection">
-			<h4>Please choose a recovery method</h4>
+			<h4>{{ "Please choose a recovery method"|trans }}</h4>
 			<p class="sonata-bc">
-				<a href={{ path('recovery_email_page') }}>Recovery by mail</a><br />
-				<a href={{ path('recovery_admin_page') }}>Notify your domain admin</a>
+				<a href={{ path('recovery_email_page') }}>{{ "Recovery by mail"|trans }}</a><br />
+				<a href={{ path('recovery_admin_page') }}>{{ "Notify your domain admin"|trans }}</a>
 			</div>
 		</div>
 	</p>

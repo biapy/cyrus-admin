@@ -1,6 +1,6 @@
 {% extends 'BiapyCyrusBundle::layout.html.twig' %}
 
-{% block title %}Recovery by mail{% endblock %}
+{% block title %}{{ "Recovery by mail"|trans }}{% endblock %}
 
 {% block bar %}{% endblock %}
 
@@ -10,7 +10,7 @@
 			{% if flash is defined %}
 			<div class="alert alert-error">{{ flash }}</div>
 			{%  endif %}
-			<h4>Please enter the new password:</h4><br/>
+			<h4>{% "Please enter the new password"|trans %}</h4><br/>
 			<div class="form">
 				<form action={{ path('recovery_email_page') }} method="post">
 					{{ form_widget(form) }}
