@@ -78,6 +78,84 @@
                 <source>Target</source>
                 <target>Cible</target>
             </trans-unit>
+            <trans-unit id="choose_recovery_method">
+                <source>Please choose a recovery method</source>
+                <target>Veuillez choisir une méthode de recupération</target>
+            </trans-unit>
+            <trans-unit id="recovery_mail">
+                <source>Recovery by mail</source>
+                <target>Récupération par mail</target>
+            </trans-unit>
+            <trans-unit id="notify_domain_admin">
+                <source>Notify your domain admin</source>
+                <target>Demander à votre administrateur de domaine</target>
+            </trans-unit>
+            <trans-unit id="enter_new_password">
+                <source>Please enter the new password</source>
+                <target>Entrez le nouveau mot de passe</target>
+            </trans-unit>
+            <trans-unit id="user_setting_panel">
+                <source>User Settings Panel</source>
+                <target>Panneau de Configuration</target>
+            </trans-unit>
+            <trans-unit id="recovery">
+                <source>Recovery</source>
+                <target>Récupération</target>
+            </trans-unit>
+            <trans-unit id="user_doesnt_exist">
+                <source>This user doesn't exist</source>
+                <target>Cet utilisateur n'existe pas</target>
+            </trans-unit>
+            <trans-unit id="recovery_mail_sent">
+                <source>A mail has been sent to your recovery mail</source>
+                <target>Un mail a été envoyé à votre mail de récupération</target>
+            </trans-unit>
+            <trans-unit id="no_recovery_mail">
+                <source>This user doesn't have any recovery mail</source>
+                <target>Cet utilisateur n'a pas de mail de récuperation</target>
+            </trans-unit>
+            <trans-unit id="inset_username_to_recover">
+                <source>Please insert the username of the account to recover</source>
+                <target>Quel est le nom d'utilisateur du compte à recupérer?</target>
+            </trans-unit>
+            <trans-unit id="recovery_mail_sent_to_admins">
+                <source>A mail has been sent to the administrators</source>
+                <target>Un mail de récupération à été envoyé aux administrateurs.</target>
+            </trans-unit>
+                <trans-unit id="insert_username_and_message_for_the_admins">
+                <source>Please insert your username and a message for the administrators</source>
+                <target>Merci d'indiquer votre nom d'utilisateur ainsi que le message que vous souhaitez envoyer à l'administrateur</target>
+            </trans-unit>
+                <trans-unit id="new_passwords_do_not_match">
+                <source>The two fields for the new password do not match</source>
+                <target>Les deux champs pour le nouveau mot de passe ne sont pas identique</target>
+            </trans-unit>
+                <trans-unit id="wrong_password">
+                <source>Wrong password</source>
+                <target>Mauvais mot de passe</target>
+            </trans-unit>
+                <trans-unit id="password_correctly_changed">
+                <source>Password correctly changed</source>
+                <target>Mot de passe mis à jour</target>
+            </trans-unit>
+                <trans-unit id="recovery_mail_changed">
+                <source>Recovery mail correctly changed</source>
+                <target>Email de récupération mis à jour</target>
+            </trans-unit>
+            <trans-unit id="token_too_old">
+                <source>Token too old</source>
+                <target>Token trop ancien</target>
+            </trans-unit>
+            <trans-unit id="token_not_found">
+                <source>Token not found</source>
+                <target>Token incorrect</target>
+            </trans-unit>
+            <trans-unit id="insert_new_password">
+                <source>Please insert a new password</source>
+                <target>Entrez un nouveau mot de passe</target>
+            </trans-unit>
+
+
         </body>
     </file>
 </xliff>
