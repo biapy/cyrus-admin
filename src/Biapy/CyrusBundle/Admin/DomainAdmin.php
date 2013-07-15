@@ -1,14 +1,15 @@
 <?php
 
 namespace Biapy\CyrusBundle\Admin;
- 
+
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Biapy\CyrusBundle\Extension\ExtendedAdmin;
- 
+use Sonata\AdminBundle\Route\RouteCollection;
+
 class DomainAdmin extends ExtendedAdmin
 {
     // setup the default sort column and order
@@ -38,6 +39,16 @@ class DomainAdmin extends ExtendedAdmin
             ->addIdentifier('name')
         ;
     }
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $token = $this->getSecurityContext()->getToken();
+        if(!is_null($token) && !$this->getSecurityContext()->isGranted('ROLE_SUPER_ADMIN')){
+             $collection    ->remove('create')
+                            ->remove('list');
+        }
+    }
+
 
     public function validate(ErrorElement $errorElement, $object){
 

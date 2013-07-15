@@ -1,13 +1,14 @@
 <?php
 
 namespace Biapy\CyrusBundle\Admin;
- 
+
 use Sonata\AdminBundle\Admin\Admin;
 use Sonata\AdminBundle\Datagrid\ListMapper;
 use Sonata\AdminBundle\Datagrid\DatagridMapper;
 use Sonata\AdminBundle\Validator\ErrorElement;
 use Sonata\AdminBundle\Form\FormMapper;
 use Sonata\AdminBundle\Show\ShowMapper;
+use Sonata\AdminBundle\Route\RouteCollection;
 
 use Biapy\CyrusBundle\Entity\SenderWatch;
 use Biapy\CyrusBundle\Extension\ExtendedAdmin;
@@ -19,7 +20,7 @@ class SenderWatchAdmin extends ExtendedAdmin
         '_sort_order' => 'ASC',
         '_sort_by' => 'domain',
     );
- 
+
     protected function configureFormFields(FormMapper $formMapper)
     {
         $formMapper
@@ -28,7 +29,7 @@ class SenderWatchAdmin extends ExtendedAdmin
             ->add('enabled')
         ;
     }
- 
+
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
         $datagridMapper
@@ -37,7 +38,7 @@ class SenderWatchAdmin extends ExtendedAdmin
             ->add('enabled')
         ;
     }
- 
+
     protected function configureListFields(ListMapper $listMapper)
     {
         $listMapper
@@ -53,7 +54,7 @@ class SenderWatchAdmin extends ExtendedAdmin
             ))
         ;
     }
- 
+
     protected function configureShowField(ShowMapper $showMapper)
     {
         $showMapper
@@ -62,18 +63,27 @@ class SenderWatchAdmin extends ExtendedAdmin
             ->add('enabled')
         ;
     }
-    
+
+    protected function configureRoutes(RouteCollection $collection)
+    {
+        $token = $this->getSecurityContext()->getToken();
+        if(!is_null($token) && !$this->getSecurityContext()->isGranted('ROLE_SUPER_ADMIN')){
+             $collection    ->remove('create')
+                            ->remove('list');
+        }
+    }
+
     public function validate(ErrorElement $errorElement, $object){
     	if($object->getEnabled()){
-    
-    		/* 
+
+    		/*
     		 * sender_address 	- Needs to fit email pattern	- Max Length: 255 characters	- Can't be empty
     		 * target 			- Needs to fit email pattern	- Max Length: 255 characters	- Can't be empty
     		 */
-    
+
     		$maxLengthSender = 255;
     		$maxLengthTarget = 255;
-    
+
     		$errorElement	->with('sender_address')
     							->assertNotBlank()
     							->assertEmail()
