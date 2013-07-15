@@ -40,6 +40,7 @@ class UserAdmin extends ExtendedAdmin
 
     		$formMapper	->add('username')
     					->add('password')
+                        ->add('recovery_mail', 'email')
     					->add('enabled', null, array('required' => false));
 
     		if( $this->securityContext->isGranted('ROLE_SUPER_ADMIN') )
@@ -60,6 +61,7 @@ class UserAdmin extends ExtendedAdmin
         $datagridMapper
             ->add('domain', null, array(), null, array('choices' => $this->getSecurityContext()->getToken()->getUser()->getGrantedDomains()))
             ->add('username')
+            ->add('recovery_mail')
             ->add('enabled')
         ;
     }
@@ -68,6 +70,7 @@ class UserAdmin extends ExtendedAdmin
     {
         $listMapper
             ->add('email')
+            ->add('recovery_mail')
             ->add('enabled')
             ->add('_action', 'actions', array(
                 	'actions'	=> array(
@@ -84,6 +87,7 @@ class UserAdmin extends ExtendedAdmin
             ->add('domain')
             ->add('username')
             ->add('password')
+            ->add('recovery_mail')
             ->add('enabled')
         ;
     }
