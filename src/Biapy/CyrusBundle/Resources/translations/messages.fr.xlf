@@ -182,6 +182,15 @@
                 <source>Logout</source>
                 <target>Se déconnecter</target>
             </trans-unit>
+            <trans-unit id="password_again">
+                <source>Password Confirmation</source>
+                <target>Confirmation du nouveau mot de passe</target>
+            </trans-unit>
+            <trans-unit id="new_password">
+                <source>New Password</source>
+                <target>Nouveau mot de passe</target>
+            </trans-unit>
+
         </body>
     </file>
 </xliff>
