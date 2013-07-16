@@ -78,6 +78,18 @@
                 <source>Target</source>
                 <target>Cible</target>
             </trans-unit>
+            <trans-unit id="granted_domain">
+                <source>Granted Domains</source>
+                <target>Domaines alloués</target>
+            </trans-unit>
+            <trans-unit id="is_super_admin">
+                <source>Is Super Admin</source>
+                <target>Super administrateur</target>
+            </trans-unit>
+            <trans-unit id="password_recovery">
+                <source>Password recovery</source>
+                <target>Récupération du mot de passe</target>
+            </trans-unit>
             <trans-unit id="choose_recovery_method">
                 <source>Please choose a recovery method</source>
                 <target>Veuillez choisir une méthode de recupération</target>
@@ -154,8 +166,22 @@
                 <source>Please insert a new password</source>
                 <target>Entrez un nouveau mot de passe</target>
             </trans-unit>
-
-
+            <trans-unit id="recovery_email">
+                <source>Recovery Mail</source>
+                <target>Mail de récupération</target>
+            </trans-unit>
+            <trans-unit id="user_settings">
+                <source>User Settings</source>
+                <target>Panneau de Configuration</target>
+            </trans-unit>
+            <trans-unit id="login">
+                <source>Login</source>
+                <target>Se connecter</target>
+            </trans-unit>
+            <trans-unit id="logout">
+                <source>Logout</source>
+                <target>Se déconnecter</target>
+            </trans-unit>
         </body>
     </file>
 </xliff>
