@@ -129,10 +129,13 @@ class UserAdmin extends ExtendedAdmin
         {
             $user = $securityContext->getToken()->getUser();
             $query->join('o.domain', 'domain')
-                ->join('domain.adminUsers', 'user')
-                ->andWhere('user = :user')
-                ->setParameter('user', $user);
-    	}
+                  ->join('domain.adminUsers', 'user')
+                  ->andWhere('user = :user')
+                  ->setParameter('user', $user)
+                  ->orderBy('o.domain, o.username');
+    	} else {
+            $query->orderBy('o.domain, o.username');
+        }
     	return $query;
     }
 

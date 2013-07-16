@@ -55,7 +55,7 @@ class AliasAdmin extends ExtendedAdmin {
 
 	public function validate(ErrorElement $errorElement, $object)
 	{
-		/* 
+		/*
 		 * aliasname	- Needs to fit alias pattern		- Max Length: 255 characters	- Can't be empty
 		 * domain 		- Needs to fit domain pattern		- Max Length: 255 characters - Can't be empty
 		 * targets		- Each line
@@ -99,9 +99,12 @@ class AliasAdmin extends ExtendedAdmin {
 		{
             $user = $securityContext->getToken()->getUser();
             $query->join('o.domain', 'domain')
-                ->join('domain.adminUsers', 'user')
-                ->andWhere('user = :user')
-                ->setParameter('user', $user);
+                  ->join('domain.adminUsers', 'user')
+                  ->andWhere('user = :user')
+                  ->setParameter('user', $user)
+				  ->orderBy('o.domain, o.aliasname');
+		} else {
+			$query->orderBy('o.domain, o.aliasname');
 		}
 		return $query;
 	}
