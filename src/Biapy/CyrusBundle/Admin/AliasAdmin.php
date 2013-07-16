@@ -103,9 +103,10 @@ class AliasAdmin extends ExtendedAdmin {
                   ->join('domain.adminUsers', 'user')
                   ->andWhere('user = :user')
                   ->setParameter('user', $user)
-				  ->orderBy('o.domain, o.aliasname');
+				  ->orderBy('domain.name, o.aliasname');
 		} else {
-			$query->orderBy('o.domain, o.aliasname');
+			$query  ->join('o.domain', 'domain')
+					->orderBy('domain.name, o.aliasname');
 		}
 		return $query;
 	}

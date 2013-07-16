@@ -134,9 +134,10 @@ class UserAdmin extends ExtendedAdmin
                   ->join('domain.adminUsers', 'user')
                   ->andWhere('user = :user')
                   ->setParameter('user', $user)
-                  ->orderBy('o.domain, o.username');
+                  ->orderBy('domain.name, o.username');
     	} else {
-            $query->orderBy('o.domain, o.username');
+            $query  ->join('o.domain', 'domain')
+                    ->orderBy('domain.name, o.username');
         }
     	return $query;
     }
