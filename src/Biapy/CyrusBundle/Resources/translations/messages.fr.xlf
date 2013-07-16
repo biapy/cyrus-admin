@@ -96,7 +96,7 @@
             </trans-unit>
             <trans-unit id="recovery_mail">
                 <source>Recovery by mail</source>
-                <target>Récupération par mail</target>
+                <target>Récupération par mél</target>
             </trans-unit>
             <trans-unit id="notify_domain_admin">
                 <source>Notify your domain admin</source>
@@ -108,7 +108,7 @@
             </trans-unit>
             <trans-unit id="user_setting_panel">
                 <source>User Settings Panel</source>
-                <target>Panneau de Configuration</target>
+                <target>Préférences</target>
             </trans-unit>
             <trans-unit id="recovery">
                 <source>Recovery</source>
@@ -120,11 +120,11 @@
             </trans-unit>
             <trans-unit id="recovery_mail_sent">
                 <source>A mail has been sent to your recovery mail</source>
-                <target>Un mail a été envoyé à votre mail de récupération</target>
+                <target>Un mél a été envoyé à votre adresse mél de récupération</target>
             </trans-unit>
             <trans-unit id="no_recovery_mail">
                 <source>This user doesn't have any recovery mail</source>
-                <target>Cet utilisateur n'a pas de mail de récuperation</target>
+                <target>Cet utilisateur n'a pas d'adresse mél de récuperation</target>
             </trans-unit>
             <trans-unit id="inset_username_to_recover">
                 <source>Please insert the username of the account to recover</source>
@@ -132,7 +132,7 @@
             </trans-unit>
             <trans-unit id="recovery_mail_sent_to_admins">
                 <source>A mail has been sent to the administrators</source>
-                <target>Un mail de récupération à été envoyé aux administrateurs.</target>
+                <target>Un mél de récupération à été envoyé aux administrateurs.</target>
             </trans-unit>
                 <trans-unit id="insert_username_and_message_for_the_admins">
                 <source>Please insert your username and a message for the administrators</source>
@@ -144,7 +144,7 @@
             </trans-unit>
                 <trans-unit id="wrong_password">
                 <source>Wrong password</source>
-                <target>Mauvais mot de passe</target>
+                <target>Mot de passe incorrect</target>
             </trans-unit>
                 <trans-unit id="password_correctly_changed">
                 <source>Password correctly changed</source>
@@ -152,7 +152,7 @@
             </trans-unit>
                 <trans-unit id="recovery_mail_changed">
                 <source>Recovery mail correctly changed</source>
-                <target>Email de récupération mis à jour</target>
+                <target>Adresse mél de récupération mise à jour</target>
             </trans-unit>
             <trans-unit id="token_too_old">
                 <source>Token too old</source>
@@ -168,11 +168,11 @@
             </trans-unit>
             <trans-unit id="recovery_email">
                 <source>Recovery Mail</source>
-                <target>Mail de récupération</target>
+                <target>Mél de récupération</target>
             </trans-unit>
             <trans-unit id="user_settings">
                 <source>User Settings</source>
-                <target>Panneau de Configuration</target>
+                <target>Préférences</target>
             </trans-unit>
             <trans-unit id="login">
                 <source>Login</source>
@@ -189,6 +189,10 @@
             <trans-unit id="new_password">
                 <source>New Password</source>
                 <target>Nouveau mot de passe</target>
+            </trans-unit>
+            <trans-unit id="submit">
+                <source>Submit</source>
+                <target>Valider</target>
             </trans-unit>
 
         </body>
