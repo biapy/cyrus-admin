@@ -19,15 +19,15 @@
 			{% endif %}
 		<div class="form">
 			<form action="{{ path('login_check') }}" method="post">
-		    	<label class="control-group" for="username">Username:</label>
+		    	<label class="control-group" for="username">{{ "Username"|trans }}:</label>
 		    	<input type="email" id="username" name="_username" value="{{ last_username }}" />
 				<br />
-		    	<label class="control-group" for="password">Password:</label>
+		    	<label class="control-group" for="password">{{ "Password"|trans }}:</label>
 		    	<input type="password" id="password" name="_password" />
 				<br />
-		    	<button type="submit">login</button>	
+		    	<button type="submit">{{ "Login"|trans }}</button>
 			</form>
 		</div>
-		<a href={{ path('recovery_page') }}>Password recovery</a>
+		<a href={{ path('recovery_page') }}>{{ "Password recovery"|trans }}</a>
 	</div>
 {% endblock %}

@@ -40,7 +40,7 @@ class UserAdmin extends ExtendedAdmin
 
     		$formMapper	->add('username')
     					->add('password')
-                        ->add('recovery_mail', 'email')
+                        ->add('recovery_mail', 'email', array('required' => false))
     					->add('enabled', null, array('required' => false));
 
     		if( $this->securityContext->isGranted('ROLE_SUPER_ADMIN') )
@@ -58,12 +58,14 @@ class UserAdmin extends ExtendedAdmin
 
     protected function configureDatagridFilters(DatagridMapper $datagridMapper)
     {
-        $datagridMapper
-            ->add('domain', null, array(), null, array('choices' => $this->getSecurityContext()->getToken()->getUser()->getGrantedDomains()))
-            ->add('username')
-            ->add('recovery_mail')
-            ->add('enabled')
-        ;
+        if($this->getSecurityContext()->isGranted('ROLE_SUPER_ADMIN'))
+            $datagridMapper->add('domain');
+        else
+            $datagridMapper ->add('domain', null, array(), null, array('choices' => $this->getSecurityContext()->getToken()->getUser()->getGrantedDomains()));
+
+        $datagridMapper ->add('username')
+                        ->add('recovery_mail')
+                        ->add('enabled');
     }
 
     protected function configureListFields(ListMapper $listMapper)
@@ -132,9 +134,10 @@ class UserAdmin extends ExtendedAdmin
                   ->join('domain.adminUsers', 'user')
                   ->andWhere('user = :user')
                   ->setParameter('user', $user)
-                  ->orderBy('o.domain, o.username');
+                  ->orderBy('domain.name, o.username');
     	} else {
-            $query->orderBy('o.domain, o.username');
+            $query  ->join('o.domain', 'domain')
+                    ->orderBy('domain.name, o.username');
         }
     	return $query;
     }

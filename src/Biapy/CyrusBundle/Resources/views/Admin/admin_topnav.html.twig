@@ -1,8 +1,7 @@
 {% extends 'SonataAdminBundle:Core:user_block.html.twig' %}
 
 {% block user_block %}
-	<a href="{{ path('user_edit_page') }}">User Settings</a> |
-	<a href="{{ path('logout') }}">Logout</a> 
-    {# {{ locale_switcher(null, null, 'BiapyCyrusBundle:Admin:switcher_links.html.twig') }} #}
+	<a href="{{ path('user_edit_page') }}">{{ "User Settings"|trans }}</a> |
+	<a href="{{ path('logout') }}">{{ "Logout"|trans }}</a>
     {{ parent() }}
 {% endblock %}

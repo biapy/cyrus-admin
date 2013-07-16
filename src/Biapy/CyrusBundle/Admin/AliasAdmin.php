@@ -18,20 +18,25 @@ class AliasAdmin extends ExtendedAdmin {
 
 	protected function configureFormFields(FormMapper $formMapper)
 	{
-		$formMapper	->add('domain', null, array('choices' => $this->getSecurityContext()->getToken()->getUser()->getGrantedDomains())) //'choices' => $this->getSecurityContext()->getToken()->getUser()->getGrantedDomains())
-					->add('aliasname')
+		if($this->getSecurityContext()->isGranted('ROLE_SUPER_ADMIN'))
+            $formMapper->add('domain');
+        else
+			$formMapper->add('domain', null, array('choices' => $this->getSecurityContext()->getToken()->getUser()->getGrantedDomains()));
+
+		$formMapper ->add('aliasname')
 					->add('targets', 'textarea')
-					->add('enabled')
-					;
+					->add('enabled');
 	}
 
 	protected function configureDatagridFilters(DatagridMapper $datagridMapper)
 	{
-		$datagridMapper
-            ->add('domain', null, array(), null, array('choices' => $this->getSecurityContext()->getToken()->getUser()->getGrantedDomains()))
-			->add('aliasname')
-			->add('enabled')
-		;
+		if($this->getSecurityContext()->isGranted('ROLE_SUPER_ADMIN'))
+            $datagridMapper->add('domain');
+        else
+            $datagridMapper ->add('domain', null, array(), null, array('choices' => $this->getSecurityContext()->getToken()->getUser()->getGrantedDomains()));
+
+		$datagridMapper ->add('aliasname')
+						->add('enabled');
 	}
 
 	protected function configureListFields(ListMapper $listMapper)
@@ -39,13 +44,9 @@ class AliasAdmin extends ExtendedAdmin {
 		$listMapper
 			->add('email')
 			->add('enabled')
-            ->add('_action', 'actions', array(
-                	'actions'	=> array(
-                    'edit' 		=> array(),
-                    'delete' 	=> array(),
-                )
-            ))
-        ;
+            ->add('_action', 'actions', array( 'actions'	=> array( 'edit' 		=> array(),
+                    					  	   'delete' 	=> array()))
+            );
 	}
 
 	protected function configureShowField(ShowMapper $showMapper)
@@ -102,9 +103,10 @@ class AliasAdmin extends ExtendedAdmin {
                   ->join('domain.adminUsers', 'user')
                   ->andWhere('user = :user')
                   ->setParameter('user', $user)
-				  ->orderBy('o.domain, o.aliasname');
+				  ->orderBy('domain.name, o.aliasname');
 		} else {
-			$query->orderBy('o.domain, o.aliasname');
+			$query  ->join('o.domain', 'domain')
+					->orderBy('domain.name, o.aliasname');
 		}
 		return $query;
 	}

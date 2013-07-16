@@ -175,9 +175,9 @@ class UserManagementInterfaceController extends Controller
     	$entityManager = $this->getDoctrine()->getManager();
     	$form = $this	->createFormBuilder(array())
     					->add('password', 'password', array('required' => false))
-    					->add('new_password', 'password', array('required' => false))
-    					->add('new_password_again', 'password', array('required' => false))
-    					->add('recovery_email', 'email', array('data' => $this->getUser()->getRecoveryMail(), 'required' => false))
+    					->add('new_password', 'password', array('required' => false, 'label' => $this->get('translator')->trans("New Password")))
+    					->add('new_password_again', 'password', array('required' => false, 'label' => $this->get('translator')->trans("Password Confirmation")))
+    					->add('recovery_email', 'email', array('data' => $this->getUser()->getRecoveryMail(), 'required' => false, 'label' => $this->get('translator')->trans("Recovery Mail")))
     					->getForm();
 
     	$request = $this->getRequest();
