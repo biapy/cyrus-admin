@@ -39,7 +39,7 @@ class UserAdmin extends ExtendedAdmin
     		}
 
     		$formMapper	->add('username')
-    					->add('password')
+    					->add('password', 'password', array('required' => false))
                         ->add('recovery_mail', 'email', array('required' => false))
     					->add('enabled', null, array('required' => false));
 
@@ -115,11 +115,8 @@ class UserAdmin extends ExtendedAdmin
 						->with('domain')
 							->assertNotNull()
 							->assertNotBlank()
-							->end()
-						->with('password')
-							->assertNotBlank()
-							->assertLength(array('max' => $maxLengthPassword))
 							->end();
+
     }
 
     public function createQuery($context = 'list')
